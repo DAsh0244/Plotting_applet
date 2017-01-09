@@ -1,0 +1,134 @@
+# -*- coding: utf-8 -*-
+# Logging application main handler that handles interactions between the classes that makeup the application.
+# Copyright 2016 : Danyal Ahsanullah
+
+import multiprocessing
+import sys
+import ConsoleHandling
+import ConfigOptions
+import GuiHandler
+import FileIOHandler
+# from decorators import *
+from SerialHandler import SerialHandler
+from DialogHandler import StartSessionDialog, StartBitDepthDialog
+from pyqtgraph.Qt import QtGui  # , QtCore
+
+""" Logging setup: """
+import logging
+logger = logging.getLogger('Main App')
+FMT = "%(asctime)s - %(name)s - %(message)s"  # - %(levelname)s
+logging.basicConfig(format=FMT, level=logging.INFO)
+#  CRITICAL - 50
+#  ERROR    - 40
+#  WARNING  - 30
+#  INFO     - 20
+#  DEBUG    - 10
+#  NOTSET   - 0
+
+
+class MainHandler(GuiHandler.GuiHandler):
+    """
+    The main handling class that controls interactions between components of the application
+    Responsible for starting and stopping remote processes as well as coordinating data transfer between them
+    """
+
+# More or Less Finalised:
+    def __init__(self):
+        super(MainHandler, self).__init__(self)
+        self.console = None  # placeholder for readability
+        self.write = None  # placeholder for readability
+        self.stream = multiprocessing.Process(target=SerialHandler.stream_port, name='Stream_proc')
+        self.Config = ConfigOptions.ConfigData()
+        # self.MainGui = GuiHandler.GuiHandler(self)
+        logger.info('initial window title is: {}'.format(self.MainWindow.windowTitle()))
+        self.session_name_update()
+        self.update_bit_data()
+        # print( end='\n')
+        logger.info('Bit Order: {}'.format(str(self.Config.BitDepth)))
+
+    def session_name_update(self):
+        """
+        Gets Updated Session Name from Session Name Dialog Box
+        Called from the actionNameSession QAction
+        """
+        self.Config.set_session_data(StartSessionDialog(self).get_session_values())
+        self.MainWindow.setWindowTitle('Logging App - {}'.format(self.Config.get_session_data()[0]))
+        logger.info('window title is: {}'.format(self.MainWindow.windowTitle()))
+
+    def begin_plotting(self):
+        """
+        Creates Remote Process to start steaming port data
+        Called by the openPort QPushButton
+        """
+        self.toggle_port_state()
+        if not self.open_port and self.stream.is_alive():
+            logger.info('terminating stream: ' + self.stream.name)
+            self.stream.terminate()
+        elif self.open_port:
+            self.stream.start()
+            logger.info('Process started: {}'.format(self.stream.name))
+            logger.info('PROCESS PID: {}'.format(self.stream.pid))
+
+    def close_app(self):
+        """
+        Exits Application
+        Called from the actionExit QAction
+        """
+        logger.info('Closing Application session: {}'.format(self.Config.get_session_data()[0]))
+        logger.info('Active children: {}'.format(multiprocessing.active_children()))
+        for process in multiprocessing.active_children():
+            logger.info('terminating process: {} ({})'.format(process.name, process.pid))
+            process.terminate()
+        self.close_win()
+        current_process = multiprocessing.current_process()
+        logger.info('terminating process: {} ({})'.format(current_process.name, current_process.pid))
+        sys.exit(0)
+
+    # NOTE: MAY WANT TO INTEGRATE AS A DEBUG CONSOLE?
+    def open_console(self):
+        """ Opens an interactive Python Console """
+        self.console = ConsoleHandling.ConsoleHandler()
+        logger.info('PUT CONSOLE HERE WHENEVER FAKING CUNT!')
+        self.console.start_console()
+
+# Almost Good:
+    def begin_write(self):
+        """
+        Creates Remote Process to start steaming port data
+        Called by the WriteButton QPushButton
+        """
+        self.toggle_write_state()
+        config = self.Config
+        self.write = multiprocessing.Process(target=FileIOHandler.StreamWrite, name='Write_proc', args=(config,))
+        self.write.start()
+        logger.info('Process started: {}'.format(self.write.name))
+        logger.info('PROCESS PID: {}'.format(str(self.write.pid)))
+        self.write.terminate()
+        import time
+        time.sleep(1)
+        if not self.write.is_alive():
+            logger.info('Process: {} terminated!'.format(self.write.name))
+        else:
+            logger.info('terminating...', end='')
+            self.write.terminate()
+            logger.info('Done!')
+
+# ... its a mess right now:
+        # TODO Make not a complete re - instantiation method call
+    def update_serial_config(self):
+        self.Config.SerialPort = self.PortDropDown.currentText()
+        self.Config.SerialBaud = self.BaudDropDown.currentText()
+
+    def update_bit_data(self):
+        bit_data = StartBitDepthDialog(self).get_session_values()
+        self.Config.set_bit_data(bit_data)
+
+
+# END CLASS
+
+# Conditional check to start application and provide safeguard for multiprocessing
+if __name__ == '__main__':
+    multiprocessing.freeze_support()
+    app = QtGui.QApplication(sys.argv)
+    MainHandle = MainHandler()
+    sys.exit(app.exec_())
