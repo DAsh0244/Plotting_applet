@@ -1,0 +1,186 @@
+# Logging application main handler that handles interactiosn between the classes that makeup the application.
+# Copyright 2016 : Danyal Ahsanullah
+
+import multiprocessing
+import sys
+from pyqtgraph.Qt import QtGui
+import numpy as np
+
+from DialogHandler import StartSessionDialog, StartBitDepthDialog
+from Plotting_Gui import Ui_Plotting_Gui
+from SerialHandler import SerialHandler
+
+# TODO Look into this vs other Dialog Handlers and Such import paths
+from logging_application import Dummy_Data,  ConsoleHandling , ConfigOptions, PlotHandling, GuiHandler
+
+class MainWindowHandler(QtGui.QMainWindow):
+    def __init__(self):
+        super(MainWindowHandler, self).__init__()
+        self.Config = ConfigOptions.ConfigData()
+        self.MainGui = GuiHandler.GuiHandler()
+        # self.ui = Ui_Plotting_Gui()
+        # self.MainWindow = QtGui.QMainWindow()
+        # self.ui.setupUi(self.MainWindow)
+        # self.ui.Plot_2.hide()                       # hide second plot
+        # self.ui.BaudDropDown.addItems(SerialHandler().BaudVals)    # add baudrates list as options
+        # self.ui.BaudDropDown.setCurrentIndex(SerialHandler().BaudVals.index('9600'))     # makes '9600' default option
+        # validator = QtGui.QIntValidator(110, 921600, self)
+        # self.ui.BaudDropDown.setValidator(validator)
+        # self.pool = multiprocessing.Pool(processes=4)
+
+        # # TODO Implement Remote Method for test data plotting
+        # self.populate_plots()
+        #
+        # self.menu_init()
+        # self.button_init()
+        # self.update_com_ports()
+        # self.MainWindow.show()
+        print('initial window title is: ', self.MainGui.MainWindow.windowTitle(), end='\n')
+        self.session_name_update()
+        self.update_bit_data()
+        print( end='\n')
+        print('BITORDER : ' + str(self.Config.BitDepth))
+
+    # def menu_init(self):
+    #     self.ui.actionScan_Ports.triggered.connect(self.update_com_ports)
+    #     self.ui.actionExit.triggered.connect(self.close_app)
+    #     self.ui.actionNameSession.triggered.connect(self.session_name_update)
+    #     self.ui.actionInput_Bit_Depth.triggered.connect(self.update_bit_data)
+    #     self.ui.actionConsole.triggered.connect(self.open_console)
+    #
+    # def button_init(self):
+    #     self.ui.DualPlot.stateChanged.connect(self.dual_plot)
+    #     self.ui.FFT_button.clicked.connect(self.fft_enable)
+    #     self.ui.Plot_Button.clicked.connect(self.begin_plotting)
+
+# TODO Make not a completet reinstatation method call
+    def update_serial_config(self):
+        SerialHandler.__init__(port_num=self.ui.PortDropDown.currentText(), )
+
+    def update_bit_data(self):
+        BitData = StartBitDepthDialog(self).get_session_values()
+        self.Config.set_bit_data(BitData)
+
+    # def fft_enable(self):
+    #     print('FFT Toggled!')
+    #     if self.Config._fft_enable == True:
+    #         self.ui.Plot_2.hide()
+    #         self.ui.Plot_1.show()
+    #         self.Config._fft_enable = False
+    #     else:
+    #         self.ui.Plot_1.hide()
+    #         self.ui.Plot_2.show()
+    #         self.Config._fft_enable = True
+    #
+    #     #TODO MOVE DEBUGGING ATTR TO SOMOE OTHER FUNC
+    #     print(multiprocessing.current_process())
+    #     print(multiprocessing.active_children())
+    #     if hasattr(self, 'stream'):
+    #         self.stream.terminate()
+    #         del self.stream
+    #         print('Process Killed!')
+    #         import time
+    #         time.sleep(.5)
+    #         print(multiprocessing.current_process())
+    #         print(multiprocessing.active_children())
+
+    # def populate_plots(self):
+    #
+    #     #FIXME DUMMY DATA FOR NOW!!
+    #     self.data = Dummy_Data.data
+    #     self.fft_data =  abs(np.fft.rfft(self.data))
+    #
+    #     # First Plot Setup
+    #     main_plot = self.ui.Plot_1.pg.PlotItem()
+    #     main_plot.showGrid(x=True, y=True)
+    #     main_plot._setProxyOptions(deferGetattr=True)
+    #     self.ui.Plot_1.setCentralItem(main_plot)
+    #
+    #     # Second Plot Setup
+    #     second_plot = self.ui.Plot_2.pg.PlotItem()
+    #     second_plot.showGrid(x=True, y=True)
+    #     second_plot._setProxyOptions(deferGetattr=True)
+    #     self.ui.Plot_2.setCentralItem(second_plot)
+    #
+    #     # Optional Line for now
+    #     main_plot.plot(self.data,  _callSync='off')
+    #     second_plot.plot(self.fft_data,  _callSync='off')
+    #     del self.data
+    #     del self.fft_data
+
+## Almost Good:
+
+    # FIXME NOTE: MAY WANT TO INTEGRATE AS A DEBUG CONSOLE???
+    # Opens an interactive Python Console
+    def open_console(self):
+        self.console = ConsoleHandling.ConsoleHandler()
+        self.console.start_console()
+
+## More or Less Finalised:
+
+    # Gets Updated Session Name from Session Name Dialog Box
+    # Called from the actionNameSession QAction
+    def session_name_update(self,):
+        self.Config.set_session_data(StartSessionDialog(self).get_session_values())
+        self.MainGui.MainWindow.setWindowTitle('Logging App - ' + self.Config.get_session_data())
+        print('window title is: ', self.MainGui.MainWindow.windowTitle(), end='\n')
+
+    # Creates Remote Porcess to start steaming port data
+    def begin_plotting(self):
+        ## Check if process is already started on that specific port
+        self.stream = multiprocessing.Process(target=SerialHandler.stream_port, name='Stream_proc')
+        self.stream.start()
+        print('PROCESS PID: ' + str(self.stream.pid))
+        # self.pool.apply_async(SerialHandler.stream_port, callback=self.receiveResult,
+        #                       error_callback=self.receiveException)
+
+        # def receiveResult(self,  result):
+        #     print('Process finished!')
+        #     for p in result:
+        #         print(p)
+        #
+        # def receiveException(self, exception):
+        #     print('Exception Occured! ' + str(exception))
+
+    # Enables Both Plots to be shown at once
+    # Called when 'DualPlot' checkbutton is checked
+    def dual_plot(self):
+        if self.ui.DualPlot.isChecked():
+            print('Button Checked!', end='\n')
+            self.ui.Plot_1.show()
+            self.ui.Plot_2.show()
+        else:
+            print('Button Not Checked!', end='\n')
+            self.ui.Plot_2.hide()
+
+    # Calls the SerialHandler.ports_scan method to get a lsit of current ports and updates 'PortDropDown' with new list
+    # Celled from the actionScan_Ports QAction
+    def update_com_ports(self):
+        self.ui.PortDropDown.clear()
+        for port in SerialHandler.ports_scan():
+            self.ui.PortDropDown.addItem(str(port))
+
+    # Exits Application
+    # Called from the actionExit QAction
+    def close_app(self):
+        print('Closing Application session: ' + self.Config.get_session_data(), end='\n')
+        sys.exit(0)
+
+## END CLASS
+
+# TODO create means of checking button's previous state
+def toggle_state(func):
+    if   not getattr(func,'toggled', 1) == False:  # looks for attribute 'toggled'
+        func.toggled = np.bool_(True)    # if not present, creates one defaulted to True
+    elif func.toggle == True:
+        print(np.invert(func.toggle))
+        print(func.toggle)
+    else:
+        pass
+
+# Conditional check to start application and provide safegaurd for multiprocessing
+if __name__ == '__main__':
+    multiprocessing.freeze_support()
+    app = QtGui.QApplication(sys.argv)
+    MainHandle = MainWindowHandler()
+    sys.exit(app.exec_())
