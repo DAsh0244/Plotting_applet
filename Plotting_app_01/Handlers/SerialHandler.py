@@ -94,7 +94,7 @@ class SerialHandler(serial.Serial):
         self.enable = stream_enable
         # self.packet = _packet_size
         self.order = _bit_order  # not for serial communication but for non PHY level protocols
-        self.set_flag = record_func
+        self.trigger_update = record_func
         self.index = index
         self.port = port_name
 
@@ -140,7 +140,7 @@ class SerialHandler(serial.Serial):
                     self.buf[i] = unpack('d', ret)[0]
                     i = 0 if i == BUFFERSIZE-1 else (i+1)  # i == BUFFERSIZE ? i = 0 : i++
                     if i % CHUNKSIZE == 0 and i != 0:
-                        self.set_flag(i, None)
+                        self.trigger_update(i, None)
                 #  data = self.ser.read(size=(math.ceil(self.data_size/8)))
                 #  module_logger.info(data)
             except TypeError:
@@ -148,7 +148,7 @@ class SerialHandler(serial.Serial):
                 # TODO - Ring Buffers Anyone?
                 logger.info('Finished reading...Index = {}'.format(i))
             finally:
-                self.set_flag(i, None)
+                self.trigger_update(i, None)
                 logger.info('Array Contents:')
                 for i in range(0, BUFFERSIZE):
                     logger.info('{}: {}'.format(i, self.buf[i]))
@@ -197,22 +197,22 @@ class SerialHandler(serial.Serial):
                     if self.index.value % CHUNKSIZE == 0 and self.index.value != 0:
                         a = array(self.time_buf[self.index.value-CHUNKSIZE:self.index.value])
                         delta = diff(a).sum() / CHUNKSIZE
-                        self.set_flag(self.index.value, delta)
+                        self.trigger_update(self.index.value, delta)
             except TypeError:
                 pass
             finally:
-                self.index.value -= 1
+                self.index.value = self.index.value-1 if self.index.value != 0 else BUFFERSIZE-1
                 # TODO - Ring Buffers Anyone?
                 tem_val = frombuffer(self.buf.get_obj())
                 tem_time = frombuffer(self.time_buf.get_obj())
                 logger.info('Finished reading...Index = {}'.format(self.index.value))
-                if CHUNKSIZE - 1 < self.index.value < 3 * CHUNKSIZE - 1:
+                if CHUNKSIZE - 1 < self.index.value <= BUFFERSIZE - 1:
                     a = array(self.time_buf[self.index.value - CHUNKSIZE:self.index.value])
                 elif self.index.value < CHUNKSIZE - 1:
                     a = array(tem_time[:self.index.value])
                 delta = diff(a).sum() / CHUNKSIZE
                 logger.info('{}  {}  {}'.format(self.index.value, delta, self.index.value))
-                self.set_flag(self.index.value, delta, self.index.value)
+                self.trigger_update(self.index.value, delta, self.index.value)
                 self.close()
                 self.buf.__setslice__(0, BUFFERSIZE,
                                     concatenate([tem_val[self.index.value + 1:BUFFERSIZE], tem_val[:self.index.value + 1]]))
@@ -252,7 +252,7 @@ class SerialHandler(serial.Serial):
 #                     self.buf[i] = unpack('d', ret)[0]
 #                     i = 0 if i == BUFFERSIZE-1 else i+1  # i == BUFFERSIZE ? i = 0 : i++
 #                     if i % CHUNKSIZE == 0:
-#                         self.set_flag(True)
+#                         self.trigger_update(True)
 #                         module_logger.info('{}: {}'.format(i, self.buf[i]))
 #                 #  data = self.ser.read(size=(math.ceil(self.data_size/8)))
 #                 #  module_logger.info(data)

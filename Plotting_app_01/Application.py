@@ -27,8 +27,8 @@ logger.addHandler(FH)
 logger.info('************************ PROGRAM STARTED ************************')
 
 
-def update(obj, *args, **kwargs):
-    obj.update(*args, **kwargs)
+def update(*args, **kwargs):
+    update(*args, **kwargs)
 
 
 class MainHandler(GuiHandler):
@@ -42,7 +42,7 @@ class MainHandler(GuiHandler):
         super(MainHandler, self).__init__(self)
         # self.index = 0
         self.index = Value('I', 0)
-        self.stream = Stream(cfg=self.Config, func=update(self), index=self.index, choice=self.file_dup,
+        self.stream = Stream(cfg=self.Config, func=update, index=self.index, choice=self.file_dup,
                              update=self.session_name_update, config=self.Config)
         # self.write = StreamWrite(choice=self.file_dup, update=self.session_name_update, config=self.Config)
         logger.info('initial window title is: {}'.format(self.MainWindow.windowTitle()))
@@ -52,6 +52,7 @@ class MainHandler(GuiHandler):
         self.data_set = zeros(shape=(0, 2), dtype=float64)
         logger.info('Bit Depth: {}'.format(str(self.Config.BitDepth)))
 
+    #TODO Figure out how to fix this.... its the rate limiting step here it seems
     def update(self, index, delta, chunk_length=CHUNKSIZE):
         """
         called when a new chunk of data has been read by the stream
@@ -98,6 +99,7 @@ class MainHandler(GuiHandler):
         """
         if self.Config.StreamEnable.value:
             self.toggle_write_state()
+            self.stream.update_params(self.Config)
             if not self.Config.WriteEnable.value:
                 self.Config.WriteEnable.value = True
                 self.stream.start_writing()
@@ -112,6 +114,7 @@ class MainHandler(GuiHandler):
         """
         self.toggle_plot_state()
         self.update_serial_config()
+        self.stream.update_params(self.Config)
         if not self.Config.StreamEnable.value:
             self.Config.StreamEnable.value = True
             if not self.stream.stream.is_alive():

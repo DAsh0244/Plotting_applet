@@ -91,7 +91,7 @@ class Stream:
             raise ModeError
 
     def update_params(self, cfg):
-        self.params['port'] = cfg.SerialPort
+        self.params['port_name'] = cfg.SerialPort
         self.params['baudrate'] = cfg.SerialBaud
         self.params['_bit_order'] = cfg.BitOrder
         self.params['_bit_depth'] = cfg.BitDepth
@@ -131,7 +131,7 @@ class Stream:
         if self.mode == STREAMTYPE.SERIAL:
             # self.stream = Process(target=serial_stream_data, name='Stream_proc', args=(self.params,))
             self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',
-                                  args=(self.params, self.time_buffer, self.start_log))
+                          args=(self.params, self.time_buffer, self.start_log))
         elif self.mode == STREAMTYPE.NI_DAQ:
             pass
         elif self.mode == STREAMTYPE.USB:
