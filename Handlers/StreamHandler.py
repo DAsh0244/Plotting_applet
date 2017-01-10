@@ -38,7 +38,7 @@ class ModeError(ValueError):
 
 class Stream:
     """Stream handler object that handles streaming operations"""
-    def __init__(self, cfg, func, index=Value('I', 0), **kwargs):
+    def __init__(self, cfg, update_params, index=Value('I', 0), **kwargs):
         self.buffer = Array('d', BUFFERSIZE)
         self.time_buffer = Array('d', BUFFERSIZE)
         self.mode = cfg.StreamType
@@ -56,7 +56,8 @@ class Stream:
                            '_bit_order': cfg.BitOrder,
                            '_bit_depth': cfg.BitDepth,
                            'buffer': self.buffer,
-                           'record_func': func,
+                           'record_func': update_params[0],
+                           'record_par': None,  #Todo THIS thing -- prolly update_params[1]
                            'index': self.index,
                            'stream_enable': self.stream_enable
                            }

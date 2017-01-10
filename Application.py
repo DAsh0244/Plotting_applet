@@ -28,7 +28,10 @@ logger.info('************************ PROGRAM STARTED ************************')
 
 
 def update(*args, **kwargs):
-    update(*args, **kwargs)
+    MainHandler.update(*args, **kwargs)
+
+data_set = zeros(shape=(0, 2), dtype=float64)
+idx = Value('I', 0)
 
 
 class MainHandler(GuiHandler):
@@ -41,34 +44,47 @@ class MainHandler(GuiHandler):
         self.Config = ConfigData()
         super(MainHandler, self).__init__(self)
         # self.index = 0
-        self.index = Value('I', 0)
-        self.stream = Stream(cfg=self.Config, func=update, index=self.index, choice=self.file_dup,
+        global idx
+        self.stream = Stream(cfg=self.Config, func=(update, ), index=idx, choice=self.file_dup,
                              update=self.session_name_update, config=self.Config)
         # self.write = StreamWrite(choice=self.file_dup, update=self.session_name_update, config=self.Config)
         logger.info('initial window title is: {}'.format(self.MainWindow.windowTitle()))
         self.session_name_update()
         self.update_bit_data()
         # data init - will hold total set of data for the incoming waveforms
-        self.data_set = zeros(shape=(0, 2), dtype=float64)
+
         logger.info('Bit Depth: {}'.format(str(self.Config.BitDepth)))
 
     #TODO Figure out how to fix this.... its the rate limiting step here it seems
-    def update(self, index, delta, chunk_length=CHUNKSIZE):
+    @staticmethod
+    def update(cfg, index, delta, chunk_length=CHUNKSIZE, main_plot=None, second_plot=None, stream=None):
         """
-        called when a new chunk of data has been read by the stream
+        Called when a new chunk of data has been read by the stream.
+
+        :param cfg: parent Config object. MUST be passed in initialisation of the stream object.
+        :param index: current stream buffer index
+        :param delta: calculated average time step between points of the stream buffer
+        :param chunk_length: number of entries to be added to the plot, most use cases should be CHUNKSIZE
+        :param main_plot: the main plot that handles time domain data
+        :param second_plot: the secondary plot that handles the FFT data of the data set
+        :param stream object to get at its buffers
+
+        :return: N/A
         """
         logger.info('update')
-        self.Config.write_block.value = True
+        global data_set
+        global idx
+        cfg.write_block.value = True
         # record data
         start = index - chunk_length
-        self.data_set = append(self.data_set,
-                               concatenate((self.stream.buffer[start:index],
-                               self.stream.time_buffer[start:index])).reshape((2, chunk_length)), axis=1)
-        self.index += chunk_length
+        data_set = append(data_set,
+                          concatenate((stream.buffer[start:index],
+                                       stream.time_buffer[start:index])).reshape((2, chunk_length)),
+                          axis=1)
+        idx += chunk_length
         # plot additional data down...
-        self.main_plot.plot(x=self.data_set[0], y=self.data_set[1], clear=True, _callSync='off')
-        self.second_plot.plot(x=DSP.fft_sample(self.data_set[1], delta), y=DSP.fft(self.data_set[0]),
-                              clear=True, _callSync='off')
+        main_plot.plot(x=data_set[0], y=data_set[1], clear=True, _callSync='off')
+        second_plot.plot(x=DSP.fft_sample(data_set[1], delta), y=DSP.fft(data_set[0]), clear=True, _callSync='off')
 
     def session_name_update(self):
         """
@@ -130,7 +146,8 @@ class MainHandler(GuiHandler):
     def update_serial_config(self):
         logger.info('triggered')
         from re import search
-        self.Config.SerialPort = search('^(\S+)', self.PortDropDown.currentText()).group(1)
+        port = search('^(\S+)', self.PortDropDown.currentText())
+        self.Config.SerialPort = port.group(1) if (port is not None) else None
         self.Config.SerialBaud = int(self.BaudDropDown.currentText())
         self.stream.update_params(self.Config)
         logger.info(self.Config.SerialPort)

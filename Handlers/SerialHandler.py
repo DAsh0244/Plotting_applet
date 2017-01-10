@@ -4,8 +4,8 @@
 import sys
 from re import search
 from numpy import diff, array, concatenate, frombuffer
-# from libs import fakeSerial as serial
-import serial
+from libs import fakeSerial as serial
+# import serial
 from libs.Constants import *
 
 """ Logging setup: """
@@ -85,7 +85,7 @@ class SimulatedValue:
 
 
 class SerialHandler(serial.Serial):
-    def __init__(self, port_name=None, stream_enable=SimulatedValue(False), record_func=None, buffer=None, index=0,
+    def __init__(self, port_name=None, stream_enable=SimulatedValue(False), record_params=(None,), buffer=None, index=0,
                  _bit_order=BITORDER.LSB, _bit_depth=BITDEPTHS.EIGHT, **kwargs):  # _packet_size=8,
         super(SerialHandler, self).__init__(**kwargs)
         self.buf = buffer
@@ -94,7 +94,7 @@ class SerialHandler(serial.Serial):
         self.enable = stream_enable
         # self.packet = _packet_size
         self.order = _bit_order  # not for serial communication but for non PHY level protocols
-        self.trigger_update = record_func
+        self.trigger_update = record_params[0]  # todo check this sometime
         self.index = index
         self.port = port_name
 

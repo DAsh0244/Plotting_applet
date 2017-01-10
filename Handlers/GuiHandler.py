@@ -92,7 +92,7 @@ class GuiHandler(Ui_Plotting_Gui):
         self.main_plot.setLabel('bottom', 'Time', 's')
         self.main_plot.setLabel('left', 'Voltage', 'V')
         self.main_plot.setXRange(-1, 0.5)
-        self.main_plot._setProxyOptions(deferGetattr=True, callsync='off')
+        self.main_plot._setProxyOptions(deferGetattr=True, callSync='off')
         self.Plot_1.setCentralItem(self.main_plot)
 
         # Second Plot Setup
@@ -100,7 +100,7 @@ class GuiHandler(Ui_Plotting_Gui):
         self.second_plot.showGrid(x=True, y=True)
         self.second_plot.setLabel('bottom', 'freq', 'Hz')
         self.second_plot.setLabel('left', 'magnitude', 'dB')
-        self.second_plot._setProxyOptions(deferGetattr=True, callsync='off')
+        self.second_plot._setProxyOptions(deferGetattr=True, callSync='off')
         self.Plot_2.setCentralItem(self.second_plot)
 
         # Optional Line for now
