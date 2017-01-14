@@ -105,7 +105,7 @@ class ConfigData:
     # todo rework bit depth dialog
     def set_bit_data(self, data):
         """ uses a tuple to set plotting/analysis options """
-        self.BitDepth = [data[0][0]]
+        self.BitDepth = data[0][0]
         if data[0][1] == 'LSB':
             self.BitOrder = BITORDER.LSB
         else:

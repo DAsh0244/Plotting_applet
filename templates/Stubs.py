@@ -65,6 +65,18 @@ class Parent(object):
         sys.exit(5)
 
     @staticmethod
+    def toggle_plotting():
+        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+
+    @staticmethod
+    def toggle_write():
+        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+
+    @staticmethod
+    def update_serial_config():
+        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+
+    @staticmethod
     def begin_plotting():
         print('i tell you where i hid the plot... for a money')
         sys.exit(4)

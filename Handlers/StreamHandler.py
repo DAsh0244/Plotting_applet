@@ -38,7 +38,7 @@ class ModeError(ValueError):
 
 class Stream:
     """Stream handler object that handles streaming operations"""
-    def __init__(self, cfg, update_params, index=Value('I', 0), **kwargs):
+    def __init__(self, cfg, pipe, index=Value('I', 0), **kwargs):
         self.buffer = Array('d', BUFFERSIZE)
         self.time_buffer = Array('d', BUFFERSIZE)
         self.mode = cfg.StreamType
@@ -56,14 +56,13 @@ class Stream:
                            '_bit_order': cfg.BitOrder,
                            '_bit_depth': cfg.BitDepth,
                            'buffer': self.buffer,
-                           'record_func': update_params[0],
-                           'record_par': None,  #Todo THIS thing -- prolly update_params[1]
+                           'pipe': pipe,
                            'index': self.index,
                            'stream_enable': self.stream_enable
                            }
-            self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',
-                          args=(self.params, self.time_buffer, self.start_log))
-            # self.stream = Process(target=serial_stream_data, name='Stream_proc', args=(self.params,))
+            #self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',
+            #              args=(self.params, self.time_buffer, self.start_log))
+            self.stream = Process(target=serial_stream_data, name='Stream_proc', args=(self.params,))
         elif self.mode == STREAMTYPE.NI_DAQ:
             pass
         elif self.mode == STREAMTYPE.USB:

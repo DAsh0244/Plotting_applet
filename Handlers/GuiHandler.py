@@ -1,25 +1,27 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 : Danyal Ahsanullah
 
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from Handlers.SerialHandler import SerialHandler, ports_scan
 from templates.Plotting_Gui import Ui_Plotting_Gui
 
-# """ Logging setup: """
-# import logging
-# from os import getcwd
-# # logger = logging.get# logger(__name__)
-# # logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-# FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
-# FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
-# FH.setFormatter(FMT)
-# # logger.addHandler(FH)
+""" Logging setup: """
+import logging
+from os import getcwd
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
+FH.setFormatter(FMT)
+logger.addHandler(FH)
+
 # try:
 #     #
 #     _fromUtf8 = QtCore.QString.fromUtf8
 # except AttributeError:
 #     def _fromUtf8(s):
 #         return s
+
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
     def _translate(context, text, disambig):
@@ -32,7 +34,6 @@ except AttributeError:
 class GuiHandler(Ui_Plotting_Gui):
     def __init__(self, par):
         super(GuiHandler, self).__init__()
-
         # flag vars for keeping track of toggle state buttons
         self.open_port = False
         self.fft_enable = False
@@ -83,7 +84,6 @@ class GuiHandler(Ui_Plotting_Gui):
         self.PortDropDown.currentIndexChanged.connect(par.update_serial_config)
         self.BaudDropDown.currentIndexChanged.connect(par.update_serial_config)
 
-
         # self.timebuffer = zeros(shape=CHUNKSIZE * MAXCHUNKS, dtype=float64)
 
         # First Plot Setup
@@ -108,13 +108,13 @@ class GuiHandler(Ui_Plotting_Gui):
         # self.second_plot.plot(x=DSP.fft_sample(self.databuffer, Dummy_Data.delta), y=DSP.fft(self.databuffer),
         #                       callSync='off')
 
+        self.update_interval = 100
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(par.update)
+        self.timer.start(self.update_interval)
+
         self.MainWindow.show()
-
-        # self.timer = QtCore.QTimer()
-        # self.timer.timeout.connect(par.update)
-        # self.timer.start(50)
-
-    #  END INIT
+        '''END INIT'''
 
     def dual_plot(self):
         """
@@ -152,9 +152,6 @@ class GuiHandler(Ui_Plotting_Gui):
         from sys import exit
         sleep(1)
         exit(0)
-        # #  FIGURE OUT BETTER TERMINATION
-        # from pyqtgraph import exit as done
-        # done()
 
     def toggle_fft_state(self):
         if self.fft_enable:
@@ -203,27 +200,14 @@ class GuiHandler(Ui_Plotting_Gui):
     def file_dup(self):
         from pyqtgraph.Qt.QtGui import QMessageBox
         # noinspection PyCallByClass,PyTypeChecker
-        choice = QMessageBox.question(self.MainWindow, 'File Name Error!',
-                                      'File(s) Already exists, rename session?',
-                                      QtGui.QMessageBox.Yes | QtGui.QMessageBox.No,
-                                      QtGui.QMessageBox.Yes)
+        choice = QMessageBox.question(self.MainWindow, 'File Name Error!',           # box title
+                                      'File(s) Already exists, rename session?',     # message text
+                                      QtGui.QMessageBox.Yes | QtGui.QMessageBox.No,  # options
+                                      QtGui.QMessageBox.Yes)                         # default
         if choice == QMessageBox.Yes:
             return True
         else:
             return False
-
-    # @staticmethod
-    # def file_dup():
-    #     from pyqtgraph.Qt.QtGui import QMessageBox
-    #     # noinspection PyCallByClass
-    #     choice = QMessageBox.question(None, 'File Name Error!',
-    #                                   'File(s) Already exists, rename session?',
-    #                                   QtGui.QMessageBox.Yes | QtGui.QMessageBox.No,
-    #                                   QtGui.QMessageBox.Yes)
-    #     if choice == QMessageBox.Yes:
-    #         return True
-    #     else:
-    #         return False
 
 # Conditional check to start for isolated testing
 if __name__ == '__main__':

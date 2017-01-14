@@ -85,7 +85,7 @@ class SimulatedValue:
 
 
 class SerialHandler(serial.Serial):
-    def __init__(self, port_name=None, stream_enable=SimulatedValue(False), record_params=(None,), buffer=None, index=0,
+    def __init__(self, pipe=None, port_name=None, stream_enable=SimulatedValue(False), buffer=None, index=0,
                  _bit_order=BITORDER.LSB, _bit_depth=BITDEPTHS.EIGHT, **kwargs):  # _packet_size=8,
         super(SerialHandler, self).__init__(**kwargs)
         self.buf = buffer
@@ -94,7 +94,7 @@ class SerialHandler(serial.Serial):
         self.enable = stream_enable
         # self.packet = _packet_size
         self.order = _bit_order  # not for serial communication but for non PHY level protocols
-        self.trigger_update = record_params[0]  # todo check this sometime
+        self.pipe = pipe
         self.index = index
         self.port = port_name
 
@@ -129,29 +129,30 @@ class SerialHandler(serial.Serial):
                 from ctypes import c_double
                 from struct import unpack
                 num_bytes = ceil(self.data_size/self.bytesize)
-                # module_logger.info('\ndata size: {}\nbytesize: {}\nnumber of bytes to read: {}'
-                #             .format(self.data_size, self.bytesize, num_bytes))
+                logger.info('\ndata size: {}\nbytesize: {}\nnumber of bytes to read: {}'
+                            .format(self.data_size, self.bytesize, num_bytes))
                 while self.enable.value:
                     ret = self.read(num_bytes)
                     offset = num_bytes - len(ret)
                     if offset > 0:
                         ret += "\0" * offset
                     # TODO HANDLE REBUILDING DATA FROM BYTES -- LSB/MSB first
-                    self.buf[i] = unpack('d', ret)[0]
-                    i = 0 if i == BUFFERSIZE-1 else (i+1)  # i == BUFFERSIZE ? i = 0 : i++
-                    if i % CHUNKSIZE == 0 and i != 0:
-                        self.trigger_update(i, None)
+                    # TODO - Ring Buffers definetly
+                    temp = unpack('f', ret)     # TODO correct format specification somehow
+                    self.buf[i] = temp[0]
+                    if (i % CHUNKSIZE == 0 and i != 0) or (i == BUFFERSIZE-1):
+                        self.pipe.send(self.buf[i-CHUNKSIZE:i])
                 #  data = self.ser.read(size=(math.ceil(self.data_size/8)))
                 #  module_logger.info(data)
+                    i = 0 if i == BUFFERSIZE-1 else (i+1)  # i == BUFFERSIZE ? i = 0 : i++
             except TypeError:
                 i -= 1
-                # TODO - Ring Buffers Anyone?
                 logger.info('Finished reading...Index = {}'.format(i))
             finally:
-                self.trigger_update(i, None)
+                self.pipe.send(self.buf[i-CHUNKSIZE:i])
                 logger.info('Array Contents:')
-                for i in range(0, BUFFERSIZE):
-                    logger.info('{}: {}'.format(i, self.buf[i]))
+                for entry in range(0, BUFFERSIZE):
+                    logger.info('{}: {}'.format(entry, self.buf[entry]))
                 self.close()
                 logger.info('closed self')
         # sys.exit(0)
@@ -197,7 +198,8 @@ class SerialHandler(serial.Serial):
                     if self.index.value % CHUNKSIZE == 0 and self.index.value != 0:
                         a = array(self.time_buf[self.index.value-CHUNKSIZE:self.index.value])
                         delta = diff(a).sum() / CHUNKSIZE
-                        self.trigger_update(self.index.value, delta)
+                        self.pipe.send(self.index.value)
+                        self.pipe.send(delta)
             except TypeError:
                 pass
             finally:
@@ -212,7 +214,7 @@ class SerialHandler(serial.Serial):
                     a = array(tem_time[:self.index.value])
                 delta = diff(a).sum() / CHUNKSIZE
                 logger.info('{}  {}  {}'.format(self.index.value, delta, self.index.value))
-                self.trigger_update(self.index.value, delta, self.index.value)
+                self.pipe(self.index.value, delta, self.index.value)
                 self.close()
                 self.buf.__setslice__(0, BUFFERSIZE,
                                     concatenate([tem_val[self.index.value + 1:BUFFERSIZE], tem_val[:self.index.value + 1]]))
