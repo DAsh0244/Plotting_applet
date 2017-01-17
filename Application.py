@@ -176,12 +176,12 @@ if __name__ == '__main__':
     import sys
     from pyqtgraph.Qt import QtGui
     import atexit
-    # from multiprocessing import freeze_support
-    # freeze_support()
+    mp.freeze_support()
     app = QtGui.QApplication(sys.argv)
     MainHandle = MainHandler()
     atexit.register(MainHandle.close_app)
     # app.exit()
     app.exec_()
-    # print('safely closed')
+    # sys.exit(app.exec_())
+    # logger.info('safely closed')
     sys.exit(0)

@@ -5,15 +5,15 @@ from pyqtgraph.Qt import QtCore, QtGui
 import pyqtgraph.console
 import sys
 
-# """ Logging setup: """
-# import logging
-# from os import getcwd
-# logger = logging.getLogger(__name__)
-# logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-# FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
-# FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
-# FH.setFormatter(FMT)
-# logger.addHandler(FH)
+""" Logging setup: """
+import logging
+from os import getcwd
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
+FH.setFormatter(FMT)
+logger.addHandler(FH)
 
 
 class ConsoleHandler:
@@ -36,8 +36,7 @@ class ConsoleHandler:
         self.console.show()
 
 
-
-## Start Qt event loop unless running in interactive mode or using pyside.
+# Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
     if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
         application = QtGui.QApplication(sys.argv)

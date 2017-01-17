@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """Constants that will be drawn on for global config options"""
 
@@ -26,7 +26,7 @@ CHUNKSIZE = 100
 BUFFERSIZE = CHUNKSIZE * 3
 DATASIZE = CHUNKSIZE * MAXCHUNKS
 WINDOWSIZE = CHUNKSIZE * 10
-TIMEOUT = 100  # timoue in ms
+TIMEOUT = 100  # timeout in ms
 
 
 def ms_to_s(milliseconds=TIMEOUT):

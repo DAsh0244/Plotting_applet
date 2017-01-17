@@ -74,9 +74,6 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.mode.addAction(self.actionNI_DAQ)
         self.mode.addAction(self.actionUSB)
 
-
-
-
         # button init
         self.DualPlot.stateChanged.connect(self.dual_plot)
         self.FFT_button.clicked.connect(self.toggle_fft_state)
@@ -103,20 +100,17 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.second_plot.setLabel('left', 'magnitude', 'dB')
         self.second_plot._setProxyOptions(deferGetattr=True, callSync='off')
         self.Plot_2.setCentralItem(self.second_plot)
-
         # Optional Line for now
         # self.main_plot.plot(x=self.timebuffer, y=self.databuffer,  callSync='off')
         # self.second_plot.plot(x=DSP.fft_sample(self.databuffer, Dummy_Data.delta), y=DSP.fft(self.databuffer),
         #                       callSync='off')
-
         self.update_interval = 100
         self.timer = QtCore.QTimer()
         # noinspection PyUnresolvedReferences
         self.timer.timeout.connect(par.update)
         # self.timer.start(self.update_interval)
-
         self.MainWindow.show()
-        '''END INIT'''
+    '''END INIT'''
 
     def dual_plot(self):
         """

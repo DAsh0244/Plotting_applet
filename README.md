@@ -41,10 +41,13 @@ At this point it does startup but seeing as its still broken...that doesn't mean
 
 [3] This was and is being primarily developed on Windows 7 and 10 with limited Linux testing being done. Take that as you will.
 
+
+[ref]: links_start_here
+
 [py]:https://www.python.org/ "Python main page" 
 [pyqtg]:http://www.pyqtgraph.org/ "Official Documentation"
 [np]: http://www.numpy.org/ "Official Documentation"
 [pyqt]: https://www.riverbankcomputing.com/software/pyqt/download "Official Page"
 [ser]: https://pythonhosted.org/pyserial/ "Official Documentation"
 [DAQ]:https://pythonhosted.org/PyDAQmx/ "Official Documentation"
-[whls]: http://www.lfd.uci.edu/~gohlke/pythonlibs/
+[whls]: http://www.lfd.uci.edu/~gohlke/pythonlibs/ "Hats off to this guy"

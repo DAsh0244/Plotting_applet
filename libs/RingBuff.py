@@ -8,18 +8,28 @@ import itertools
 
 
 class RingBuffBase(object):
-    def __init__(self):
+    def __init__(self, size_max):
+        self.cap = size_max  # capacity of buffer
+        self.head = 0  # offset to oldest entry
+        self.tail = 0  # offset to newest entry
+        self.size = 0  # current number of entries in buffer
+        self._buffer = None  # buffer itself
+
+    def write(self, val):
+        pass
+
+    def write_vals(self, vals):
         pass
 
     def append(self, val):
-        pass
+        self.cap += 1
 
     def append_vals(self, vals):
-        pass
+        self.cap += len(vals)
 
     def get_all(self):
         """return a list of elements from the oldest to the newest"""
-        pass
+        return self._buffer
 
     def get_partial(self):
         """return a partial list of elements from oldest to newest"""
@@ -27,7 +37,7 @@ class RingBuffBase(object):
 
     def __getitem__(self, key):
         """get element"""
-        pass
+        return self._buffer[key]
 
     def __repr__(self):
         """return string representation"""
@@ -35,22 +45,30 @@ class RingBuffBase(object):
 
 
 class RingBuff_Deque(RingBuffBase):
-    def __init__(self):
-        super(RingBuff_Deque, self).__init__()
-        pass
+    """
+    Deque based ring buffer
+    """
+    def __init__(self, *args, **kwargs):
+        super(RingBuff_Deque, self).__init__(*args, **kwargs)
+        self._buffer = deque(self.cap)
 
 
 class RingBuff_List(RingBuffBase):
-    def __init__(self):
-        super(RingBuff_List, self).__init__()
-        pass
+    """
+    list based ring buffer
+    """
+    def __init__(self, *args, **kwargs):
+        super(RingBuff_List, self).__init__(*args, **kwargs)
+        self._buffer = [None * self.cap]
 
 
 class RingBuff_NP(RingBuffBase):
-    def __init__(self):
-        super(RingBuff_NP, self).__init__()
-        pass
-
+    """
+    Numpy based ring buffer
+    """
+    def __init__(self, _dtype=np.float64, *args, **kwargs):
+        super(RingBuff_NP, self).__init__(*args, **kwargs)
+        self._data = np.zeros(self.cap, dtype=_dtype)
 
 
 # class RingBuffer(object):
