@@ -3,7 +3,7 @@
 
 from PyQt4 import QtGui, QtCore
 from Handlers.SerialHandler import SerialHandler, ports_scan
-from templates.Plotting_Gui import Ui_Plotting_Gui
+import templates.Plotting_Gui as Ui
 
 """ Logging setup: """
 import logging
@@ -15,23 +15,8 @@ FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
 FH.setFormatter(FMT)
 logger.addHandler(FH)
 
-# try:
-#     #
-#     _fromUtf8 = QtCore.QString.fromUtf8
-# except AttributeError:
-#     def _fromUtf8(s):
-#         return s
 
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
-
-
-class GuiHandler(Ui_Plotting_Gui):
+class GuiHandler(Ui.Ui_Plotting_Gui):
     def __init__(self, par):
         super(GuiHandler, self).__init__()
         # flag vars for keeping track of toggle state buttons
@@ -59,12 +44,25 @@ class GuiHandler(Ui_Plotting_Gui):
         self.BaudDropDown.setValidator(QtGui.QIntValidator(baud[0], baud[-1]))  # set max/min to have in box
         self.update_com_ports()     # searches for com ports and populates a list of them in the cop port selection box
 
-        # menu init
+        #  menu item action init
         self.actionScan_Ports.triggered.connect(self.update_com_ports)
         self.actionExit.triggered.connect(par.close_app)
         self.actionNameSession.triggered.connect(par.session_name_update)
         self.actionInput_Bit_Depth.triggered.connect(par.update_bit_data)
         self.actionConsole.triggered.connect(par.open_console)
+        # todo: needs to be properly connected to config set functions
+        self.actionCSV.triggered.connect(lambda: print('type = CSV'))
+        self.actionMAT.triggered.connect(lambda: print('type = MAT'))
+        self.actionTXT.triggered.connect(lambda: print('type = TXT'))
+        self.actionLSB_first.triggered.connect(lambda: print('LSB FIRST'))
+        self.actionMSB_first.triggered.connect(lambda: print('MSB FIRST'))
+        self.actionSeperate_axis.triggered.connect(lambda: print('Separate axis files'))
+        self.actionCombined_Axis.triggered.connect(lambda: print('Combined axis file'))
+        self.actionSerial.triggered.connect(lambda: print('Serial Mode'))
+        self.actionNI_DAQ.triggered.connect(lambda: print('NI DAQ Mode'))
+        self.actionUSB.triggered.connect(lambda: print('USB Mode'))
+
+        # menu init
         self.extensions.addAction(self.actionCSV)
         self.extensions.addAction(self.actionTXT)
         self.extensions.addAction(self.actionMAT)
@@ -76,6 +74,9 @@ class GuiHandler(Ui_Plotting_Gui):
         self.mode.addAction(self.actionNI_DAQ)
         self.mode.addAction(self.actionUSB)
 
+
+
+
         # button init
         self.DualPlot.stateChanged.connect(self.dual_plot)
         self.FFT_button.clicked.connect(self.toggle_fft_state)
@@ -84,10 +85,9 @@ class GuiHandler(Ui_Plotting_Gui):
         self.PortDropDown.currentIndexChanged.connect(par.update_serial_config)
         self.BaudDropDown.currentIndexChanged.connect(par.update_serial_config)
 
-        # self.timebuffer = zeros(shape=CHUNKSIZE * MAXCHUNKS, dtype=float64)
-
         # First Plot Setup
-        self.main_plot = self.Plot_1.pg.PlotItem()
+        self.Plot_1.pg.setConfigOptions(antialias=False, autoDownSample=True)
+        self.main_plot = self.Plot_1.pg.PlotItem(autoDownSample=True)
         self.main_plot.showGrid(x=True, y=True)
         self.main_plot.setLabel('bottom', 'Time', 's')
         self.main_plot.setLabel('left', 'Voltage', 'V')
@@ -96,6 +96,7 @@ class GuiHandler(Ui_Plotting_Gui):
         self.Plot_1.setCentralItem(self.main_plot)
 
         # Second Plot Setup
+        self.Plot_2.pg.setConfigOptions(antialias=False, autoDownSample=False)
         self.second_plot = self.Plot_2.pg.PlotItem()
         self.second_plot.showGrid(x=True, y=True)
         self.second_plot.setLabel('bottom', 'freq', 'Hz')
@@ -110,8 +111,9 @@ class GuiHandler(Ui_Plotting_Gui):
 
         self.update_interval = 100
         self.timer = QtCore.QTimer()
+        # noinspection PyUnresolvedReferences
         self.timer.timeout.connect(par.update)
-        self.timer.start(self.update_interval)
+        # self.timer.start(self.update_interval)
 
         self.MainWindow.show()
         '''END INIT'''
@@ -144,7 +146,7 @@ class GuiHandler(Ui_Plotting_Gui):
         Exits Application
         Called from the actionExit QAction
         """
-        # self.timer.stop()
+        self.timer.stop()
         self.Plot_2.close()
         self.Plot_1.close()
         self.MainWindow.close()
@@ -157,15 +159,15 @@ class GuiHandler(Ui_Plotting_Gui):
         if self.fft_enable:
             self.fft_enable = False
             self.FFT_button.setStatusTip(
-                _translate("Plotting_Gui", "Plot the Fast Fourier Transform of the data.", None))
-            self.FFT_button.setText(_translate("Plotting_Gui", "FFT", None))
+                Ui._translate("Plotting_Gui", "Plot the Fast Fourier Transform of the data.", None))
+            self.FFT_button.setText(Ui._translate("Plotting_Gui", "FFT", None))
             self.Plot_1.show()
             self.Plot_2.hide()
         else:
             self.fft_enable = True
             self.FFT_button.setStatusTip(
-                _translate("Plotting_Gui", "Return to plotting the time domain signal.", None))
-            self.FFT_button.setText(_translate("Plotting_Gui", "Time Domain", None))
+                Ui._translate("Plotting_Gui", "Return to plotting the time domain signal.", None))
+            self.FFT_button.setText(Ui._translate("Plotting_Gui", "Time Domain", None))
             self.Plot_1.hide()
             self.Plot_2.show()
 
@@ -177,25 +179,27 @@ class GuiHandler(Ui_Plotting_Gui):
 
     def toggle_plot_state(self):
         if self.open_port:
+            self.timer.stop()
             self.open_port = False
             self.Plot_Button.setStatusTip(
-                _translate("Plotting_Gui", "Start Plotting the selected COM Port\'s data.", None))
-            self.Plot_Button.setText(_translate("Plotting_Gui", "Open Port", None))
+                Ui._translate("Plotting_Gui", "Start Plotting the selected COM Port\'s data.", None))
+            self.Plot_Button.setText(Ui._translate("Plotting_Gui", "Open Port", None))
         else:
+            self.timer.start(self.update_interval)
             self.open_port = True
             self.Plot_Button.setStatusTip(
-                _translate("Plotting_Gui", "Stop Plotting the COM Port\'s data.", None))
-            self.Plot_Button.setText(_translate("Plotting_Gui", "Close Port", None))
+                Ui._translate("Plotting_Gui", "Stop Plotting the COM Port\'s data.", None))
+            self.Plot_Button.setText(Ui._translate("Plotting_Gui", "Close Port", None))
 
     def toggle_write_state(self):
         if not self.write_checked:
             self.write_checked = True
-            self.Write_Button.setStatusTip(_translate("Plotting_Gui", "Stop Writing incoming data to file", None))
-            self.Write_Button.setText(_translate("Plotting_Gui", "Stop Write", None))
+            self.Write_Button.setStatusTip(Ui._translate("Plotting_Gui", "Stop Writing incoming data to file", None))
+            self.Write_Button.setText(Ui._translate("Plotting_Gui", "Stop Write", None))
         else:
             self.write_checked = False
-            self.Write_Button.setStatusTip(_translate("Plotting_Gui", "Start writing data to file.", None))
-            self.Write_Button.setText(_translate("Plotting_Gui", "Write", None))
+            self.Write_Button.setStatusTip(Ui._translate("Plotting_Gui", "Start writing data to file.", None))
+            self.Write_Button.setText(Ui._translate("Plotting_Gui", "Write", None))
 
     def file_dup(self):
         from pyqtgraph.Qt.QtGui import QMessageBox

@@ -38,10 +38,6 @@ class Ui_Plotting_Gui(object):
         self.Plot_2.setEnabled(True)
         self.Plot_2.setAutoFillBackground(False)
         self.Plot_2.setObjectName(_fromUtf8("Plot_2"))
-
-        self.Plot_1.pg.setConfigOptions(antialias=True)
-        self.Plot_2.pg.setConfigOptions(antialias=True)
-
         self.gridLayout.addWidget(self.Plot_2, 1, 6, 1, 1)
         self.gridLayout_2 = QtGui.QGridLayout()
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))

@@ -28,10 +28,11 @@ DATASIZE = CHUNKSIZE * MAXCHUNKS
 WINDOWSIZE = CHUNKSIZE * 10
 TIMEOUT = 100  # timoue in ms
 
+
 def ms_to_s(milliseconds=TIMEOUT):
         return milliseconds/1000
 
 TIMEDATA = 0x1001
 BUFFDATA = 0x1000
 
-# del EXT,STYP,BORD,BDPH, BYTE
+del EXT, STYP, BORD, BDPH, BYTE

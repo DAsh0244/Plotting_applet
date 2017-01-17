@@ -1,9 +1,31 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 : Danyal Ahsanullah
-import numpy
 
 from PyDAQmx.DAQmxFunctions import *
 from PyDAQmx.DAQmxConstants import *
+
+class AnalogInput(object):
+    def __init__(self, channel, limit=None, reset=False):
+        self.taskHandle = None
+        if isinstance(channel, str):
+            self.channel = [channel]
+        else:
+            self.channel = channel
+        if limit is None:
+            self.limit = (-10.0, 10.0)
+        elif isinstance(limit, tuple):
+            self.limit = limit
+        else:
+            raise TypeError('Invalid type{}. Type must be either <None> or <tuple>'.format(type(limt)))
+
+        if reset:
+            DAQmxResetDevice(physicalChannel[0].split('/')[0])
+
+    def configure(self):
+        pass
+
+    def read(self, values):
+        pass
 
 
 class MultiChannelAnalogInput(object):

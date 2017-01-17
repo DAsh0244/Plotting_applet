@@ -56,39 +56,39 @@ class Parent(object):
 
     @staticmethod
     def begin_write():
-        print('Writing...how bout fak you you utter pillak!')
+        print('Writing...')
         sys.exit(6)
 
     @staticmethod
     def update_bit_data():
-        print('Bloody Muppet...')
+        print('updating bit data...')
         sys.exit(5)
 
     @staticmethod
     def toggle_plotting():
-        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+        return 'plotting toggled'
 
     @staticmethod
     def toggle_write():
-        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+        return 'writing toggled'
 
     @staticmethod
     def update_serial_config():
-        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+        return 'serial cfg updated'
 
     @staticmethod
     def begin_plotting():
-        print('i tell you where i hid the plot... for a money')
+        print('plotting started')
         sys.exit(4)
 
     @staticmethod
     def open_console():
-        print('I\'ll Open you a Console alright ya Cunt!')
+        print('console started...')
         sys.exit(2)
 
     @staticmethod
     def session_name_update():
-        return 'THE SASSY SESSION NAME HERE YA CUNT!!'
+        return 'Session name updated'
 
     @staticmethod
     def update(x, y, z=None, con=fake_con()):
@@ -100,14 +100,12 @@ class Parent(object):
         # import time
         # time.sleep(2)
         con.write_block.value = False
-        return 'UPDATE here you Cheeky Cunt'
+        return 'UPDATED screen'
 
     @staticmethod
     def close_app():
-        print('Closing App...please hold...\n if nothign is seen in the next few moments...fuckered it up mate...')
+        print('Closing App...')
         sys.exit(0)
-        # noinspection PyUnreachableCode
-        print('...now its really fucked good and proper m8... hats off')
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -125,7 +123,6 @@ if __name__ == '__main__':
     app = QtGui.QApplication([])
     test = Parent()
     sys.exit(app.exec_())
-
 else:
     app = QtGui.QApplication([])
     # app.exec_()

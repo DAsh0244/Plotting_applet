@@ -5,6 +5,7 @@
       <option name="ignoredErrors">
         <list>
           <option value="E128" />
+          <option value="E402" />
         </list>
       </option>
     </inspection_tool>
@@ -21,6 +22,7 @@
         <list>
           <option value="NI_DAQ.DAQmxResetDevice" />
           <option value="NI_DAQ.*" />
+          <option value="libs.NI_DAQ.*" />
         </list>
       </option>
     </inspection_tool>

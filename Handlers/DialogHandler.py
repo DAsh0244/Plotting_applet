@@ -5,15 +5,15 @@ from PyQt4 import QtGui
 from templates.BitDepth_Dialog import BitDepth_Dialog
 from templates.Session_Name_Dialog import Ui_Dialog
 
-# """ Logging setup: """
-# import logging
-# from os import getcwd
-# # # logger = logging.get# # logger(__name__)
-# # # logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-# FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
-# FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
-# FH.setFormatter(FMT)
-# # # logger.addHandler(FH)
+""" Logging setup: """
+import logging
+from os import getcwd
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
+FH.setFormatter(FMT)
+logger.addHandler(FH)
 
 
 class StartSessionDialog(QtGui.QDialog, Ui_Dialog):
@@ -60,19 +60,24 @@ class StartSessionDialog(QtGui.QDialog, Ui_Dialog):
 
 
 class StartBitDepthDialog(QtGui.QDialog, BitDepth_Dialog):
-    """ Dialog Box to Get User Set ADC Bit Depth, MSB/LSB first, Voltage Range"""
-    # todo add in packet size
+    """ Dialog Box to Get User Set ADC Bit Depth, MSB/LSB first, Voltage Range, packet size"""
     def __init__(self, cfg):
         super(StartBitDepthDialog, self).__init__()
         QtGui.QDialog.__init__(self)
         self.setupUi(self)
-        validator = QtGui.QIntValidator(1, 32, self)
-        self.BitDepthDropDown.setValidator(validator)
+        bit_max = self.BitDepthDropDown.count() - 1
+        packet_max = self.PacketDropDown.count() - 1
+        bit_validator = QtGui.QIntValidator(1, int(self.BitDepthDropDown.itemText(bit_max)), self)
+        packet_validator = QtGui.QIntValidator(1, int(self.PacketDropDown.itemText(packet_max)), self)
+        self.BitDepthDropDown.setValidator(bit_validator)
+        self.PacketDropDown.setValidator(packet_validator)
         self.BitDepthDropDown.setCurrentIndex(cfg.bit_layout[0])
         self.MSB_LSBDropDown.setCurrentIndex(cfg.bit_layout[1])
         # ' - '.join(cfg.Config.MaxVoltage, cfg.Config.MaxVoltage)
-        self.BitDepthDropDown.setCurrentIndex(cfg.bit_layout[2])
+        self.VoltageRange.setCurrentIndex(cfg.bit_layout[2])
+        self.PacketDropDown.setCurrentIndex(cfg.bit_layout[3])
         self.show()
+        del bit_max, packet_max
 
     def get_bit_values(self):
         """
@@ -87,9 +92,9 @@ class StartBitDepthDialog(QtGui.QDialog, BitDepth_Dialog):
         res = self.exec_()
         if res == self.Accepted:
             vals = (int(self.BitDepthDropDown.currentText()), self.MSB_LSBDropDown.currentText().split(' ')[0],
-                    self.VoltageRange.currentText().strip(' '))
+                    self.VoltageRange.currentText().strip(' '), int(self.PacketDropDown.currentText()))
             layout = (self.BitDepthDropDown.currentIndex(), self.MSB_LSBDropDown.currentIndex(),
-                      self.VoltageRange.currentIndex())
+                      self.VoltageRange.currentIndex(), self.PacketDropDown.currentIndex())
             # logger.info(vals)
             # print(vals + layout)
         # else:

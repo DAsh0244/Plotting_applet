@@ -107,13 +107,13 @@ class Stream:
             self.check.value = True
         else:
             self.write.start()
-        print('started')
+        logger.info('writing started!')
 
     def stop_writing(self):
         self.check.value = False
 
         if self.write.is_alive():
-            print('terminating')
+            logger.info('terminating write process...')
             self.write.join()
         self.write = Process(target=write_op, name='Write_Proc',
                              args=(self.params, self.buffer, self.time_buffer, self.index, self.index.value))
@@ -127,7 +127,7 @@ class Stream:
                 self.stream_enable.value = False
                 self.stream.join()
             except AssertionError:
-                pass
+                logger.info('Issue in joining process...')
         if self.mode == STREAMTYPE.SERIAL:
             # self.stream = Process(target=serial_stream_data, name='Stream_proc', args=(self.params,))
             self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',

@@ -86,13 +86,13 @@ class SimulatedValue:
 
 class SerialHandler(serial.Serial):
     def __init__(self, pipe=None, port_name=None, stream_enable=SimulatedValue(False), buffer=None, index=0,
-                 _bit_order=BITORDER.LSB, _bit_depth=BITDEPTHS.EIGHT, **kwargs):  # _packet_size=8,
+                 _bit_order=BITORDER.LSB, _bit_depth=BITDEPTHS.EIGHT, _packet_size=8, **kwargs):
         super(SerialHandler, self).__init__(**kwargs)
         self.buf = buffer
         self.time_buf = None
         self.data_size = _bit_depth
         self.enable = stream_enable
-        # self.packet = _packet_size
+        self.packet = _packet_size
         self.order = _bit_order  # not for serial communication but for non PHY level protocols
         self.pipe = pipe
         self.index = index
@@ -278,58 +278,20 @@ if __name__ == '__main__':
     # #     c = ports_scan()
     params = {'port_name': 'COM4',
               'baudrate': 9600,
-              # '_packet_size': 8,
+              '_packet_size': 8,
               '_bit_order': BITORDER.LSB,
               '_bit_depth': BITDEPTHS.SIXTYFOUR,
               'buffer': Array('d', BUFFERSIZE),
               'record_func': lambda c, y, z=None: logger.info('\n\t\t\t\t\t\t\t\t\t\t{}  {}  {}\n\n'.format(c, y, z)),
               'index': Value('I', 0)
               }
-    # c = Process(target=SerialHandler(**params).stream_port())
-    # c.start()
-    #
-    # for process in active_children():
-    #     module_logger.info('process: {} ({})'.format(process.name, process.pid))
-    #
-    # if c.is_alive():
-    #     c.terminate()
-    # c.join()
-    #
-    # module_logger.info('\n\nround2:\n')
     time_set = Array('d', BUFFERSIZE)
     start_time = Value('d')
     x = Process(target=SerialHandler(**params).stream_port_local_time(time_set, start_time))
     x.start()
     from time import sleep
-    sleep(3)
+    sleep(2)
     x.join()
-    # ser = SerialHandler(**params)
-    # ser.stream_port()
-
-    # for i in range(0, 10):
-    #     print('{}: {}, {}'.format(i, params['buffer'][i], time_set[i]))
-
-    # print('\n{}\n'.format(start_time.value))
-    # for i in range(0, 10):
-    #     print('{}: {}, {}'.format(i, params['buffer'][i], time_set[i] + start_time.value))
-
-    # print(time_set[0:])
-    # print(BUFFERSIZE)
-    # print('')
-    # avg = 0
-    # i = 0
-    # while i < BUFFERSIZE-1:
-    #     avg = avg + (time_set[i + 1] - time_set[i])
-    #     # print(avg)
-    #     i += 1
-    # avg /= BUFFERSIZE
-    # print('')
-    # print(avg)
-    # print('\nwith numpy\n')
-    # import numpy as np
-    # a = np.array(time_set)
-    # a = np.diff(a).sum() / a.size
-    # print(a)
     logger.info('Contents')
     for i in range(0, BUFFERSIZE):
         logger.info('{}: {} , {}'.format(i, params['buffer'][i], time_set[i]))

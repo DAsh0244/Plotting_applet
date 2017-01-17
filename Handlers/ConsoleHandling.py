@@ -16,10 +16,6 @@ import sys
 # logger.addHandler(FH)
 
 
-# import data from plotting stuffs
-# import data from files maybe?
-
-
 class ConsoleHandler:
     def __init__(self):
         ## build an initial namespace for console commands to be executed in (this is optional;
