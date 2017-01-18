@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3390ed27-00bf-413b-bddb-0b18314c4026" name="Default" comment="mainly organization changes">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/Plotting_app_01.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Plotting_applet.iml" afterPath="$PROJECT_DIR$/.idea/Plotting_applet.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="3390ed27-00bf-413b-bddb-0b18314c4026" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application.py" afterPath="$PROJECT_DIR$/Application.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handlers/ConsoleHandling.py" afterPath="$PROJECT_DIR$/Handlers/ConsoleHandling.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handlers/GuiHandler.py" afterPath="$PROJECT_DIR$/Handlers/GuiHandler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Constants.py" afterPath="$PROJECT_DIR$/libs/Constants.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/RingBuff.py" afterPath="$PROJECT_DIR$/libs/RingBuff.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -117,7 +108,7 @@
         <entry file="file://$PROJECT_DIR$/Handlers/SerialHandler.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="969">
-              <caret line="114" column="11" lean-forward="true" selection-start-line="114" selection-start-column="11" selection-end-line="114" selection-end-column="11" />
+              <caret line="114" column="11" lean-forward="false" selection-start-line="114" selection-start-column="11" selection-end-line="114" selection-end-column="11" />
               <folding>
                 <element signature="e#62#72#0" expanded="true" />
                 <element signature="e#621#933#0" expanded="false" />
@@ -134,10 +125,30 @@
       <file leaf-file-name="RingBuff.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/RingBuff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="26" column="32" lean-forward="true" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+            <state relative-caret-position="34">
+              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
               <folding>
-                <element signature="e#117#135#0" expanded="true" />
+                <element signature="e#154#172#0" expanded="true" />
+                <element signature="e#246#1034#0" expanded="false" />
+                <element signature="e#467#471#0" expanded="false" />
+                <element signature="e#513#517#0" expanded="false" />
+                <element signature="e#550#624#0" expanded="false" />
+                <element signature="e#664#796#0" expanded="false" />
+                <element signature="e#838#868#0" expanded="false" />
+                <element signature="e#1077#1436#0" expanded="false" />
+                <element signature="e#1478#1836#0" expanded="false" />
+                <element signature="e#1876#2996#0" expanded="false" />
+                <element signature="e#1984#2090#0" expanded="false" />
+                <element signature="e#2132#2339#0" expanded="false" />
+                <element signature="e#2381#2470#0" expanded="false" />
+                <element signature="e#2503#2592#0" expanded="false" />
+                <element signature="e#2632#2728#0" expanded="false" />
+                <element signature="e#2770#2821#0" expanded="false" />
+                <element signature="e#3041#3517#0" expanded="false" />
+                <element signature="e#3238#3371#0" expanded="false" />
+                <element signature="e#3405#3517#0" expanded="false" />
+                <element signature="e#3566#3708#0" expanded="false" />
+                <element signature="e#3759#3902#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -149,20 +160,6 @@
             <state relative-caret-position="51">
               <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DSP.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libs/DSP.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding>
-                <element signature="e#132#532#0" expanded="false" />
-                <element signature="e#554#823#0" expanded="false" />
-                <element signature="e#867#1259#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -182,9 +179,11 @@
       <find>write</find>
       <find>triggered</find>
       <find>_translate</find>
+      <find>_data</find>
     </findStrings>
     <replaceStrings>
       <replace>UI._translate</replace>
+      <replace>_buffer</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -617,7 +616,14 @@
       <option name="project" value="LOCAL" />
       <updated>1484365346029</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="had some spare time">
+      <created>1484670511574</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1484670511574</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -639,7 +645,7 @@
       <window_info id="Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17913593" sideWeight="0.50363445" order="2" side_tool="true" content_ui="tabs" />
@@ -660,11 +666,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="integration_test" />
     <MESSAGE value="working somewhat" />
-    <option name="LAST_COMMIT_MESSAGE" value="working somewhat" />
+    <MESSAGE value="had some spare time" />
+    <option name="LAST_COMMIT_MESSAGE" value="had some spare time" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="25" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -673,19 +680,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Handlers/StreamHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="54" column="41" lean-forward="true" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
-          <folding>
-            <element signature="e#3004#3314#0" expanded="false" />
-            <element signature="e#3348#3757#0" expanded="false" />
-            <element signature="e#3801#3989#0" expanded="false" />
-            <element signature="e#4030#4123#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Handlers/SerialHandler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1360">
@@ -869,11 +863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding>
-            <element signature="e#132#532#0" expanded="false" />
-            <element signature="e#554#823#0" expanded="false" />
-            <element signature="e#867#1259#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -896,7 +885,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -932,6 +920,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
@@ -939,11 +932,6 @@
             <folding />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1000,7 +988,7 @@
     <entry file="file://$PROJECT_DIR$/Handlers/SerialHandler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="969">
-          <caret line="114" column="11" lean-forward="true" selection-start-line="114" selection-start-column="11" selection-end-line="114" selection-end-column="11" />
+          <caret line="114" column="11" lean-forward="false" selection-start-line="114" selection-start-column="11" selection-end-line="114" selection-end-column="11" />
           <folding>
             <element signature="e#62#72#0" expanded="true" />
             <element signature="e#621#933#0" expanded="false" />
@@ -1013,12 +1001,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1120166012/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="794" column="8" lean-forward="false" selection-start-line="794" selection-start-column="8" selection-end-line="794" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/libs/RingBuff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="26" column="32" lean-forward="true" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+        <state relative-caret-position="34">
+          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
           <folding>
-            <element signature="e#117#135#0" expanded="true" />
+            <element signature="e#154#172#0" expanded="true" />
+            <element signature="e#246#1034#0" expanded="false" />
+            <element signature="e#467#471#0" expanded="false" />
+            <element signature="e#513#517#0" expanded="false" />
+            <element signature="e#550#624#0" expanded="false" />
+            <element signature="e#664#796#0" expanded="false" />
+            <element signature="e#838#868#0" expanded="false" />
+            <element signature="e#1077#1436#0" expanded="false" />
+            <element signature="e#1478#1836#0" expanded="false" />
+            <element signature="e#1876#2996#0" expanded="false" />
+            <element signature="e#1984#2090#0" expanded="false" />
+            <element signature="e#2132#2339#0" expanded="false" />
+            <element signature="e#2381#2470#0" expanded="false" />
+            <element signature="e#2503#2592#0" expanded="false" />
+            <element signature="e#2632#2728#0" expanded="false" />
+            <element signature="e#2770#2821#0" expanded="false" />
+            <element signature="e#3041#3517#0" expanded="false" />
+            <element signature="e#3238#3371#0" expanded="false" />
+            <element signature="e#3405#3517#0" expanded="false" />
+            <element signature="e#3566#3708#0" expanded="false" />
+            <element signature="e#3759#3902#0" expanded="false" />
           </folding>
         </state>
       </provider>
