@@ -163,7 +163,7 @@ if __name__ == '__main__':
     # con.set_write_enable(True)
     # logger.info('starting stream')
     test = Stream(cfg=con, func=par.update, config=con, index=idx,
-                  choice=par.file_dup, update=par.session_name_update())
+                  choice=par.file_dup, update=par.session_name_update(), pipe=None) # todo this test case
     # test.start_streaming()
     # time.sleep(1)
     # test.stop_streaming()

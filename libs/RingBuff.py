@@ -9,6 +9,7 @@ import itertools
 
 
 class RingBuffBase:
+    """Skeleton Framework for a python implemented Ring Buffer"""
     def __init__(self, size_max):
         self.cap = size_max  # capacity of buffer
         self.size = 0  # current number of entries in buffer

@@ -4,6 +4,7 @@
 from PyQt4 import QtGui, QtCore
 from Handlers.SerialHandler import SerialHandler, ports_scan
 import templates.Plotting_Gui as Ui
+from libs.Constants import *
 
 """ Logging setup: """
 import logging
@@ -58,9 +59,9 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.actionMSB_first.triggered.connect(lambda: print('MSB FIRST'))
         self.actionSeperate_axis.triggered.connect(lambda: print('Separate axis files'))
         self.actionCombined_Axis.triggered.connect(lambda: print('Combined axis file'))
-        self.actionSerial.triggered.connect(lambda: print('Serial Mode'))
-        self.actionNI_DAQ.triggered.connect(lambda: print('NI DAQ Mode'))
-        self.actionUSB.triggered.connect(lambda: print('USB Mode'))
+        self.actionSerial.triggered.connect(self.serial_mode_enable)
+        self.actionNI_DAQ.triggered.connect(self.NI_mode_enable)
+        self.actionUSB.triggered.connect(self.USB_mode_enable)
 
         # menu init
         self.extensions.addAction(self.actionCSV)
@@ -83,7 +84,7 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.BaudDropDown.currentIndexChanged.connect(par.update_serial_config)
 
         # First Plot Setup
-        self.Plot_1.pg.setConfigOptions(antialias=False, autoDownSample=True)
+        self.Plot_1.pg.setConfigOptions(antialias=False)  # , autoDownSample=True)
         self.main_plot = self.Plot_1.pg.PlotItem(autoDownSample=True)
         self.main_plot.showGrid(x=True, y=True)
         self.main_plot.setLabel('bottom', 'Time', 's')
@@ -93,7 +94,7 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.Plot_1.setCentralItem(self.main_plot)
 
         # Second Plot Setup
-        self.Plot_2.pg.setConfigOptions(antialias=False, autoDownSample=False)
+        self.Plot_2.pg.setConfigOptions(antialias=False)  # , autoDownSample=False)
         self.second_plot = self.Plot_2.pg.PlotItem()
         self.second_plot.showGrid(x=True, y=True)
         self.second_plot.setLabel('bottom', 'freq', 'Hz')
@@ -111,6 +112,16 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         # self.timer.start(self.update_interval)
         self.MainWindow.show()
     '''END INIT'''
+
+# todo make this do things - maybe remap to parent
+    def serial_mode_enable(self):
+        self.mode_label.setText(Ui._translate("Plotting_Gui", "Serial", None))
+
+    def NI_mode_enable(self):
+        self.mode_label.setText(Ui._translate("Plotting_Gui", "NI DAQ", None))
+
+    def USB_mode_enable(self):
+        self.mode_label.setText(Ui._translate("Plotting_Gui", "USB", None))
 
     def dual_plot(self):
         """
@@ -145,9 +156,9 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.Plot_1.close()
         self.MainWindow.close()
         from time import sleep
-        from sys import exit
+        # from sys import exit
         sleep(1)
-        exit(0)
+        # exit(0)
 
     def toggle_fft_state(self):
         if self.fft_enable:
