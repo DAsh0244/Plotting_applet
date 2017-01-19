@@ -32,6 +32,10 @@ class RingBuffBase:
         """
         pass
 
+    def clear(self):
+        del self._buffer
+        self._buffer = None
+
     def __getitem__(self, key):
         """get element"""
         pass
@@ -47,7 +51,7 @@ class RingBuff_Deque(RingBuffBase):
     """
     def __init__(self, *args, **kwargs):
         super(RingBuff_Deque, self).__init__(*args, **kwargs)
-        self._buffer = deque(self.cap)
+        self._buffer = deque(maxlen=self.cap)
 
     def __repr__(self):
         """return string representation"""
@@ -60,7 +64,7 @@ class RingBuff_List(RingBuffBase):
     """
     def __init__(self, *args, **kwargs):
         super(RingBuff_List, self).__init__(*args, **kwargs)
-        self._buffer = [None * self.cap]
+        self._buffer = [None] * self.cap
 
     def __repr__(self):
         """return string representation"""

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3390ed27-00bf-413b-bddb-0b18314c4026" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Plotting_applet.iml" afterPath="$PROJECT_DIR$/.idea/Plotting_applet.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handlers/GuiHandler.py" afterPath="$PROJECT_DIR$/Handlers/GuiHandler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handlers/StreamHandler.py" afterPath="$PROJECT_DIR$/Handlers/StreamHandler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handlers/FileIOHandler.py" afterPath="$PROJECT_DIR$/Handlers/FileIOHandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/RingBuff.py" afterPath="$PROJECT_DIR$/libs/RingBuff.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,8 +49,8 @@
       <file leaf-file-name="GuiHandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Handlers/GuiHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="147" column="0" lean-forward="true" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+            <state relative-caret-position="2176">
+              <caret line="147" column="0" lean-forward="false" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
               <folding>
                 <element signature="e#62#93#0" expanded="true" />
                 <element signature="e#6126#6487#0" expanded="false" />
@@ -66,8 +67,8 @@
       <file leaf-file-name="FileIOHandler.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Handlers/FileIOHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="63" lean-forward="true" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
+            <state relative-caret-position="515">
+              <caret line="101" column="14" lean-forward="true" selection-start-line="101" selection-start-column="14" selection-end-line="101" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -76,8 +77,8 @@
       <file leaf-file-name="SerialHandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Handlers/SerialHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="94" column="11" lean-forward="true" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+            <state relative-caret-position="748">
+              <caret line="94" column="11" lean-forward="false" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
               <folding>
                 <element signature="e#62#72#0" expanded="true" />
                 <element signature="e#621#933#0" expanded="false" />
@@ -94,28 +95,14 @@
       <file leaf-file-name="RingBuff.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/RingBuff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+            <state relative-caret-position="2108">
+              <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
               <folding>
                 <element signature="e#154#172#0" expanded="true" />
                 <element signature="e#533#537#0" expanded="false" />
                 <element signature="e#579#583#0" expanded="false" />
                 <element signature="e#616#690#0" expanded="false" />
                 <element signature="e#730#862#0" expanded="false" />
-                <element signature="e#904#934#0" expanded="false" />
-                <element signature="e#968#1100#0" expanded="false" />
-                <element signature="e#1143#1502#0" expanded="false" />
-                <element signature="e#1544#1902#0" expanded="false" />
-                <element signature="e#2198#2405#0" expanded="false" />
-                <element signature="e#2447#2536#0" expanded="false" />
-                <element signature="e#2569#2658#0" expanded="false" />
-                <element signature="e#2698#2794#0" expanded="false" />
-                <element signature="e#2836#2887#0" expanded="false" />
-                <element signature="e#3107#3583#0" expanded="false" />
-                <element signature="e#3304#3437#0" expanded="false" />
-                <element signature="e#3471#3583#0" expanded="false" />
-                <element signature="e#3632#3774#0" expanded="false" />
-                <element signature="e#3825#3968#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -124,7 +111,7 @@
       <file leaf-file-name="StreamHandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Handlers/StreamHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
+            <state relative-caret-position="2346">
               <caret line="165" column="105" lean-forward="false" selection-start-line="165" selection-start-column="105" selection-end-line="165" selection-end-column="105" />
               <folding>
                 <element signature="e#3004#3314#0" expanded="false" />
@@ -185,13 +172,15 @@
         <option value="$PROJECT_DIR$/libs/RingBuff.py" />
         <option value="$PROJECT_DIR$/Handlers/GuiHandler.py" />
         <option value="$PROJECT_DIR$/Handlers/StreamHandler.py" />
+        <option value="$PROJECT_DIR$/Handlers/FileIOHandler.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="width" value="1386" />
-    <option name="height" value="728" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -227,6 +216,21 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Plotting_applet">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -283,21 +287,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Plotting_applet">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -305,7 +294,7 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="recentsLimit" value="7" />
   </component>
-  <component name="RunManager" selected="Python.GuiHandler">
+  <component name="RunManager" selected="Python.FileIOHandler">
     <configuration default="false" name="GuiHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -336,23 +325,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Plotting_applet" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Handlers/DialogHandler.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="BitDepth_Dialog" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/templates" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Plotting_applet" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/templates/BitDepth_Dialog.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -425,6 +397,23 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
+    <configuration default="false" name="FileIOHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Handlers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Plotting_applet" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Handlers/FileIOHandler.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -440,14 +429,6 @@
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="TheRRunConfigurationType" factoryName="R">
-      <option name="SCRIPT_PATH" value="" />
-      <option name="SCRIPT_ARGS" value="" />
-      <option name="WORKING_DIRECTORY_PATH" value="" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
@@ -570,21 +551,21 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Python.GuiHandler" />
       <item index="1" class="java.lang.String" itemvalue="Python.DialogHandler" />
-      <item index="2" class="java.lang.String" itemvalue="Python.BitDepth_Dialog" />
-      <item index="3" class="java.lang.String" itemvalue="Python.NI_DAQ" />
-      <item index="4" class="java.lang.String" itemvalue="Python.ConsoleHandling" />
-      <item index="5" class="java.lang.String" itemvalue="Python.RingBuff" />
-      <item index="6" class="java.lang.String" itemvalue="Python.Application" />
+      <item index="2" class="java.lang.String" itemvalue="Python.NI_DAQ" />
+      <item index="3" class="java.lang.String" itemvalue="Python.ConsoleHandling" />
+      <item index="4" class="java.lang.String" itemvalue="Python.RingBuff" />
+      <item index="5" class="java.lang.String" itemvalue="Python.Application" />
+      <item index="6" class="java.lang.String" itemvalue="Python.FileIOHandler" />
     </list>
     <recent_temporary>
       <list size="7">
-        <item index="0" class="java.lang.String" itemvalue="Python.GuiHandler" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Application" />
-        <item index="2" class="java.lang.String" itemvalue="Python.ConsoleHandling" />
-        <item index="3" class="java.lang.String" itemvalue="Python.RingBuff" />
-        <item index="4" class="java.lang.String" itemvalue="Python.NI_DAQ" />
-        <item index="5" class="java.lang.String" itemvalue="Python.DialogHandler" />
-        <item index="6" class="java.lang.String" itemvalue="Python.BitDepth_Dialog" />
+        <item index="0" class="java.lang.String" itemvalue="Python.FileIOHandler" />
+        <item index="1" class="java.lang.String" itemvalue="Python.GuiHandler" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Application" />
+        <item index="3" class="java.lang.String" itemvalue="Python.ConsoleHandling" />
+        <item index="4" class="java.lang.String" itemvalue="Python.RingBuff" />
+        <item index="5" class="java.lang.String" itemvalue="Python.NI_DAQ" />
+        <item index="6" class="java.lang.String" itemvalue="Python.DialogHandler" />
       </list>
     </recent_temporary>
   </component>
@@ -650,28 +631,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1386" height="728" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1084" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18598525" sideWeight="0.49636552" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718122" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32718122" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18627451" sideWeight="0.49636552" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="The R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6694631" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32912722" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270242" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17913593" sideWeight="0.50363445" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4569055" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270242" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="The R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6694631" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4569055" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -695,22 +676,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Handlers/SerialHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="85" column="0" lean-forward="true" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding>
-            <element signature="e#62#72#0" expanded="true" />
-            <element signature="e#621#933#0" expanded="false" />
-            <element signature="e#970#1138#0" expanded="false" />
-            <element signature="e#1188#1740#0" expanded="false" />
-            <element signature="e#1765#2343#0" expanded="false" />
-            <element signature="e#2372#2431#0" expanded="false" />
-            <element signature="e#3104#3355#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -870,7 +835,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -888,43 +852,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/site-packages/serial/serialutil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/logging/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="1053" column="0" lean-forward="false" selection-start-line="1053" selection-start-column="0" selection-end-line="1053" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Program Files/Python36/Lib/site-packages/serial/serialutil.py" />
+    <entry file="file://C:/Program Files/Python36/Lib/logging/__init__.py" />
     <entry file="file://$PROJECT_DIR$/Handlers/ConsoleHandling.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#46#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -936,14 +884,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1120166012/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="794" column="8" lean-forward="false" selection-start-line="794" selection-start-column="8" selection-end-line="794" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1120166012/builtins.py" />
     <entry file="file://$PROJECT_DIR$/Application.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -958,42 +899,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
           <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/RingBuff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+        <state relative-caret-position="2108">
+          <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
           <folding>
             <element signature="e#154#172#0" expanded="true" />
             <element signature="e#533#537#0" expanded="false" />
             <element signature="e#579#583#0" expanded="false" />
             <element signature="e#616#690#0" expanded="false" />
             <element signature="e#730#862#0" expanded="false" />
-            <element signature="e#904#934#0" expanded="false" />
-            <element signature="e#968#1100#0" expanded="false" />
-            <element signature="e#1143#1502#0" expanded="false" />
-            <element signature="e#1544#1902#0" expanded="false" />
-            <element signature="e#2198#2405#0" expanded="false" />
-            <element signature="e#2447#2536#0" expanded="false" />
-            <element signature="e#2569#2658#0" expanded="false" />
-            <element signature="e#2698#2794#0" expanded="false" />
-            <element signature="e#2836#2887#0" expanded="false" />
-            <element signature="e#3107#3583#0" expanded="false" />
-            <element signature="e#3304#3437#0" expanded="false" />
-            <element signature="e#3471#3583#0" expanded="false" />
-            <element signature="e#3632#3774#0" expanded="false" />
-            <element signature="e#3825#3968#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Handlers/SerialHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="94" column="11" lean-forward="true" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+        <state relative-caret-position="748">
+          <caret line="94" column="11" lean-forward="false" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
           <folding>
             <element signature="e#62#72#0" expanded="true" />
             <element signature="e#621#933#0" expanded="false" />
@@ -1010,7 +936,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="216" column="75" lean-forward="false" selection-start-line="216" selection-start-column="23" selection-end-line="216" selection-end-column="75" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1018,13 +943,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Handlers/StreamHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
+        <state relative-caret-position="2346">
           <caret line="165" column="105" lean-forward="false" selection-start-line="165" selection-start-column="105" selection-end-line="165" selection-end-column="105" />
           <folding>
             <element signature="e#3004#3314#0" expanded="false" />
@@ -1037,8 +961,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Handlers/GuiHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="147" column="0" lean-forward="true" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+        <state relative-caret-position="2176">
+          <caret line="147" column="0" lean-forward="false" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
           <folding>
             <element signature="e#62#93#0" expanded="true" />
             <element signature="e#6126#6487#0" expanded="false" />
@@ -1051,10 +975,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/Python_Shit/Lib/multiprocessing/process.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="253" column="0" lean-forward="false" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Handlers/FileIOHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="63" lean-forward="true" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
+        <state relative-caret-position="515">
+          <caret line="101" column="14" lean-forward="true" selection-start-line="101" selection-start-column="14" selection-end-line="101" selection-end-column="14" />
           <folding />
         </state>
       </provider>

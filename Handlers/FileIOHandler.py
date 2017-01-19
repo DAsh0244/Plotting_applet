@@ -105,7 +105,7 @@ if __name__ == '__main__':
     cfg.set_session_data(('test_01', getcwd() + r'/OUTPUT/'))
     cfg.WriteEnable.value = True
     par = Stubs.Parent
-    kill = Process(target=par.disable, args=(cfg,))
+    kill = Process(target=par.disable, args=(cfgk))
     main_window = Stubs.MainWindow(par, kill.start)
     stream = Process(target=StreamWrite, args=(cfg, par))
     stream.start()
