@@ -18,7 +18,6 @@ class ConfigData:
         from multiprocessing import Value
         from ctypes import c_bool
         from datetime import datetime as dt
-        # today = dt.now().strftime("%d-%b-%Y--%H-%M-%f")
         self.Extension = EXTENSION.TXT
         self.BitOrder = BITORDER.LSB
         self.BitDepth = BITDEPTHS.EIGHT
@@ -37,6 +36,8 @@ class ConfigData:
         self.writeNum = 0
         # [BitDepthIndex <int>, MSB / LSBIndex <int>, VoltageIndex <int>, PacketIndex <int>]
         self.bit_layout = [2, 0, 0, 2]
+        self.NIPort = None
+        self.NumSamples = int(1000000)
 
     # TODO MAKE PROPER
     def get_plot_data(self):
@@ -82,10 +83,9 @@ class ConfigData:
         """takes a string argument for the currently selected serial port"""
         self.SerialPort = port
 
-    def set_session_data(self, name_path):
+    def set_session_data(self, _name, _path):
         """sets data for Session Naming purposes"""
-        self.SessionDialogInfo, self.SessionPath = name_path
-        # self.SessionPath = path
+        self.SessionDialogInfo, self.SessionPath = _name, _path
 
     def set_stream_type(self, _type):
         """takes a Constant defined value from Constants.STREAMTYPE for a value that determines operating mode"""

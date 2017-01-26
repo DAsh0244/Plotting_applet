@@ -3,11 +3,13 @@
 from multiprocessing import Process, Array, Value
 from Handlers.FileIOHandler import StreamWrite
 from Handlers.SerialHandler import SerialHandler
+from Handlers.DaqHandler import MultiChannelAnalogInput
 from libs.Constants import *
 
 """ Logging setup: """
 import logging
 from os import getcwd
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
 FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
@@ -28,8 +30,12 @@ def serial_stream_data_time_inc(cls, params, time_buffer, start_log):
     cls(**params).stream_port_time_inc(time_buffer, start_log)
 
 
+def ni_stream_data(params):
+    MultiChannelAnalogInput(**params).read()
+
+
 def write_op(kwargs, buf, time_buf, idx, lnth=CHUNKSIZE):
-        StreamWrite(**kwargs, buffer=buf, time_buffer=time_buf).write(index=idx, length=lnth)
+    StreamWrite(**kwargs, buffer=buf, time_buffer=time_buf).write(index=idx, length=lnth)
 
 
 class ModeError(ValueError):
@@ -38,6 +44,7 @@ class ModeError(ValueError):
 
 class Stream:
     """Stream handler object that handles streaming operations"""
+
     def __init__(self, cfg, pipe, index=Value('I', 0), **kwargs):
         self.buffer = Array('d', BUFFERSIZE)
         self.time_buffer = Array('d', BUFFERSIZE)
@@ -60,11 +67,23 @@ class Stream:
                            'index': self.index,
                            'stream_enable': self.stream_enable
                            }
-            #self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',
+            # self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',
             #              args=(self.params, self.time_buffer, self.start_log))
             self.stream = Process(target=serial_stream_data, name='Stream_proc', args=(self.params,))
         elif self.mode == STREAMTYPE.NI_DAQ:
-            pass
+            self.params = {'channel': cfg.NIPort,
+                           'limit': (cfg.MinVoltage, cfg.MaxVoltage),
+                           'reset': False,
+                           '_samples': cfg.NumSamples,
+                           # '_packet_size': cfg.PacketSize,
+                           # '_bit_order': cfg.BitOrder,
+                           # '_bit_depth': cfg.BitDepth,
+                           # 'buffer': self.buffer,
+                           # 'pipe': pipe,
+                           # 'index': self.index,
+                           # 'stream_enable': self.stream_enable
+                           }
+            self.stream = Process(target=ni_stream_data, name='Stream proc', args=self.params, )
         elif self.mode == STREAMTYPE.USB:
             pass
         else:
@@ -131,7 +150,7 @@ class Stream:
         if self.mode == STREAMTYPE.SERIAL:
             # self.stream = Process(target=serial_stream_data, name='Stream_proc', args=(self.params,))
             self.stream = Process(target=serial_stream_local_time, name='Stream_proc_local_time',
-                          args=(self.params, self.time_buffer, self.start_log))
+                                  args=(self.params, self.time_buffer, self.start_log))
         elif self.mode == STREAMTYPE.NI_DAQ:
             pass
         elif self.mode == STREAMTYPE.USB:
@@ -139,12 +158,14 @@ class Stream:
         else:
             raise ModeError('Incorrect Mode Value ({}) used...'.format(self.mode))
 
+
 # Conditional check to start test
 if __name__ == '__main__':
     import sys
     import time
     import templates.Stubs
     from templates.ConfigOptions import ConfigData
+
     # from pprint import pprint
 
     logger.info('starting...')
@@ -153,7 +174,8 @@ if __name__ == '__main__':
     idx = Value('I', 0)
     # templates.Stubs.app.exec_()
     from os import getcwd
-    con.set_session_data(('Session1', getcwd()))
+
+    con.set_session_data('Session1', getcwd() + '\\OUTPUT\\')
     con.set_serial_baud(9600)
     con.set_serial_port('COM4')
     con.BitDepth = BITDEPTHS.SIXTYFOUR
@@ -163,7 +185,7 @@ if __name__ == '__main__':
     # con.set_write_enable(True)
     # logger.info('starting stream')
     test = Stream(cfg=con, func=par.update, config=con, index=idx,
-                  choice=par.file_dup, update=par.session_name_update(), pipe=None) # todo this test case
+                  choice=par.file_dup, update=par.session_name_update(), pipe=None)  # todo this test case
     # test.start_streaming()
     # time.sleep(1)
     # test.stop_streaming()

@@ -7,6 +7,7 @@ creates a dummy QtGui.QApplication to start for testing purposes
 import sys
 from PyQt4 import QtGui
 from multiprocessing import Value
+app = QtGui.QApplication(sys.argv)
 
 
 class write_block:
@@ -28,7 +29,6 @@ class Parent(object):
         # QtGui.QMainWindow.__init__()
         self.index = Value('I', 0)
         self.window = QtGui.QMainWindow()
-        # QtGui.QMainWindow.__init__()
 
     @staticmethod
     def file_dup():
@@ -120,9 +120,6 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
 
 if __name__ == '__main__':
-    app = QtGui.QApplication([])
     test = Parent()
+    test.window.show()
     sys.exit(app.exec_())
-else:
-    app = QtGui.QApplication([])
-    # app.exec_()

@@ -6,10 +6,12 @@ from libs.Constants import *
 
 """ Logging setup: """
 import logging
-from os import getcwd
+import os
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())):
+    os.mkdir('{}\\Debug'.format(os.getcwd()))
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
 FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
 FH.setFormatter(FMT)
 logger.addHandler(FH)
@@ -17,34 +19,30 @@ logger.addHandler(FH)
 
 class StreamWrite:
     """
-    --Handles Writing streamed data to files--
+        --Handles Writing streamed data to files--
     Makes a local copy of the relevant configuration options and
     writes the specified output format file of the incoming stream data
     until global config option StreamEnable == False
-
-    takes the following parameters
-    config -- configData class object
-    parent -- parent handler object
     """
-    def __init__(self, config, choice, update, buffer, time_buffer):
+    def __init__(self, config, choice, session_update, buffer, time_buffer):
+        """
+        :param config: configData class object
+        :param choice:
+        :param session_update:
+        :param buffer:
+        :param time_buffer:
+        """
         super(StreamWrite, self).__init__()
         import os
         self.fileType, self.fileName, self.path, self.fileNum = config.get_file_data()
         self.enable = config.WriteEnable
         self.choice = choice
         self.write_block = config.write_block
-
-        # # check for preemptive creation
-        # if not self.enable.value:
-        #     # logger.info('Write Not Enabled.')
-        #     config.writeNum = self.fileNum
-        #     # sys.exit(0)
-        # else:
         for i in os.listdir(self.path):
             if self.fileName == (os.path.splitext(i)[0]).split(sep='-')[0]:
                 logger.info('File(s) Already exists.')
                 if self.choice():
-                    self.fileName = update()
+                    self.fileName = session_update()
                     logger.info('Session Renamed!')
                 else:
                     self.fileNum += 1
@@ -98,19 +96,24 @@ if __name__ == '__main__':
     from templates import Stubs
     from templates.ConfigOptions import ConfigData
     from multiprocessing import Process
-    from os import getcwd
+    import os
     import sys
 
+    time_buff = os.urandom(1024)
+    buff = os.urandom(1024)
+    idx = 0
     cfg = ConfigData()
-    cfg.set_session_data(('test_01', getcwd() + r'/OUTPUT/'))
+    if not os.path.isdir('{}\\OUTPUT'.format(os.getcwd())):
+        os.mkdir('{}\\OUTPUT'.format(os.getcwd()))
+    cfg.set_session_data('test_01', '{}\\OUTPUT'.format(os.getcwd()))
     cfg.WriteEnable.value = True
     par = Stubs.Parent
-    kill = Process(target=par.disable, args=(cfgk))
+    kill = Process(target=par.disable, args=(cfg,))
     main_window = Stubs.MainWindow(par, kill.start)
-    stream = Process(target=StreamWrite, args=(cfg, par))
+    stream = Process(target=StreamWrite(cfg, par.file_dup, par.session_name_update, buff, time_buff).write, args=(idx,))
     stream.start()
-    # Stubs.app.exec_()
-    main_window.hide()
+    Stubs.app.exec_()
+    # main_window.hide()
     Stubs.app.exit()
     stream.join(timeout=15)
     if stream.is_alive():

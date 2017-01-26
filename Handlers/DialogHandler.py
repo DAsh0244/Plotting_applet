@@ -112,16 +112,16 @@ if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     window = QtGui.QMainWindow()
     window.Config = ConfigData()
-    window.Config.set_session_data(name_path=('Logging_App_name', os.getcwd()))
+    window.Config.set_session_data(_name='Logging_App_name', _path=os.getcwd())
     window.toolBar = window.addToolBar("Toolbar")
     # noinspection PyArgumentList
     window.toolBar.addAction(QtGui.QAction('Session', window,
-        triggered=lambda: window.Config.set_session_data(
-            name_path=(StartSessionDialog(window.Config).get_session_values(), os.getcwd()))))
+        triggered=lambda: window.Config.set_session_data(StartSessionDialog(window.Config).get_session_values())))
     # noinspection PyArgumentList
     window.toolBar.addAction(QtGui.QAction('Bit', window,
         triggered=lambda: window.Config.set_bit_data(StartBitDepthDialog(window.Config).get_bit_values())))
-
+    print(window.Config.SessionPath)
     window.show()
-
-    sys.exit(app.exec_())
+    app.exec_()
+    print(window.Config.SessionPath)
+    sys.exit(0)

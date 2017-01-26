@@ -189,3 +189,5 @@ $RECYCLE.BIN/
 /legacy/
 .idea/dictionaries/
 Debug/
+/Handlers/OUTPUT/
+/Handlers/Debug/

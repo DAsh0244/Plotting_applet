@@ -72,7 +72,8 @@ class MainHandler(GuiHandler):
         Gets Updated Session Name from Session Name Dialog Box
         Called from the actionNameSession QAction
         """
-        self.Config.set_session_data(StartSessionDialog(self.Config).get_session_values())
+        name, path = StartSessionDialog(self.Config).get_session_values()
+        self.Config.set_session_data(_name=name, _path=path)
         self.MainWindow.setWindowTitle('Logging App - {}'.format(self.Config.get_session_data()[0]))
         logger.info('window title is: {}'.format(self.MainWindow.windowTitle()))
 
