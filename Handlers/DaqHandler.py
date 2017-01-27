@@ -4,6 +4,19 @@
 from PyDAQmx.DAQmxFunctions import *
 from PyDAQmx.DAQmxConstants import *
 
+""" Logging setup: """
+import logging
+import os
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
+    os.mkdir('{}\\Debug'.format(os.getcwd()))
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
+FH.setFormatter(FMT)
+logger.addHandler(FH)
+
+
 class AnalogInput(object):
     def __init__(self, channel, limit=None, reset=False):
         self.taskHandle = None
@@ -40,13 +53,13 @@ class MultiChannelAnalogInput(object):
         readAll(), return a dictionary name:value
     """
 
-    def __init__(self, physicalChannel, limit=None, reset=False):
+    def __init__(self, physical_channel, limit=None, reset=False):
         self.taskHandles = None
-        if type(physicalChannel) == type(""):
-            self.physicalChannel = [physicalChannel]
+        if type(physical_channel) == type(""):
+            self.physicalChannel = [physical_channel]
         else:
-            self.physicalChannel = physicalChannel
-        self.numberOfChannel = physicalChannel.__len__()
+            self.physicalChannel = physical_channel
+        self.numberOfChannel = physical_channel.__len__()
         if limit is None:
             self.limit = dict([(name, (-10.0, 10.0)) for name in self.physicalChannel])
         elif type(limit) == tuple:
@@ -54,7 +67,7 @@ class MultiChannelAnalogInput(object):
         else:
             self.limit = dict([(name, limit[i]) for i, name in enumerate(self.physicalChannel)])
         if reset:
-            DAQmxResetDevice(physicalChannel[0].split('/')[0])
+            DAQmxResetDevice(physical_channel[0].split('/')[0])
 
     def configure(self):
         # Create one task handle per Channel

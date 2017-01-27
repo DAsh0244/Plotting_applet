@@ -7,11 +7,13 @@ import sys
 
 """ Logging setup: """
 import logging
-from os import getcwd
+import os
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
-FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
+logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
+    os.mkdir('{}\\Debug'.format(os.getcwd()))
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
 FH.setFormatter(FMT)
 logger.addHandler(FH)
 

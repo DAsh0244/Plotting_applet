@@ -7,6 +7,20 @@ creates a dummy QtGui.QApplication to start for testing purposes
 import sys
 from PyQt4 import QtGui
 from multiprocessing import Value
+
+""" Logging setup: """
+import logging
+import os
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
+    os.mkdir('{}\\Debug'.format(os.getcwd()))
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
+FH.setFormatter(FMT)
+logger.addHandler(FH)
+
+
 app = QtGui.QApplication(sys.argv)
 
 

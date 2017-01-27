@@ -5,9 +5,15 @@ from libs.Constants import *
 
 """ Logging setup: """
 import logging
+import os
 logger = logging.getLogger(__name__)
-FMT = "%(asctime)s - %(name)s - %(message)s"  # - %(levelname)s
-logging.basicConfig(format=FMT, level=logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
+    os.mkdir('{}\\Debug'.format(os.getcwd()))
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
+FH.setFormatter(FMT)
+logger.addHandler(FH)
 
 
 class ConfigData:
@@ -33,11 +39,12 @@ class ConfigData:
         self.MaxDataPts = MAXCHUNKS
         self.SessionDialogInfo = dt.now().strftime("%d-%b-%Y--%H-%M-%f")
         self.SessionPath = getcwd()
-        self.writeNum = 0
+        self.WriteNum = 0
         # [BitDepthIndex <int>, MSB / LSBIndex <int>, VoltageIndex <int>, PacketIndex <int>]
-        self.bit_layout = [2, 0, 0, 2]
+        self.BitLayout = [2, 0, 0, 2]
         self.NIPort = None
         self.NumSamples = int(1000000)
+        self.TimeEnable = False
 
     # TODO MAKE PROPER
     def get_plot_data(self):
@@ -61,7 +68,7 @@ class ConfigData:
 
     def get_file_data(self):
         """returns a tuple of relevant data for file writing purposes"""
-        return self.Extension, self.SessionDialogInfo, self.SessionPath, self.writeNum
+        return self.Extension, self.SessionDialogInfo, self.SessionPath, self.WriteNum
 
     def get_file_enable(self):
         """returns a tuple of relevant data for file write enable/disable"""
@@ -112,7 +119,7 @@ class ConfigData:
         self.MinVoltage, self.MaxVoltage = data[0][2].split(' - ')
         self.MinVoltage, self.MaxVoltage = float(self.MinVoltage), float(self.MaxVoltage)
         self.PacketSize = data[0][3]
-        self.bit_layout = data[1]
+        self.BitLayout = data[1]
         logger.info('{} {} {} {}'.format(self.BitDepth, self.BitOrder, self.MinVoltage, self.MaxVoltage))
 
 

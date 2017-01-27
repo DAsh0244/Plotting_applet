@@ -10,11 +10,13 @@ from libs.Constants import *
 
 """ Logging setup: """
 import logging
-from os import getcwd
+import os
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)  #  CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-FH = logging.FileHandler('{}\\Debug\\debug.log'.format(getcwd()))
-FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
+logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
+    os.mkdir('{}\\Debug'.format(os.getcwd()))
+FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
+FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
 FH.setFormatter(FMT)
 logger.addHandler(FH)
 
@@ -212,6 +214,8 @@ class SerialHandler(serial.Serial):
                     a = array(self.time_buf[self.index.value - CHUNKSIZE:self.index.value])
                 elif self.index.value < CHUNKSIZE - 1:
                     a = array(tem_time[:self.index.value])
+                else:
+                    raise ValueError('index outside array bounds! {}'.format(self.index.value))
                 delta = diff(a).sum() / CHUNKSIZE
                 logger.info('{}  {}  {}'.format(self.index.value, delta, self.index.value))
                 self.pipe(self.index.value, delta, self.index.value)

@@ -9,10 +9,10 @@ import logging
 import os
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
-if not os.path.isdir('{}\\Debug'.format(os.getcwd())):
+if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
     os.mkdir('{}\\Debug'.format(os.getcwd()))
 FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
-FMT = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
+FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
 FH.setFormatter(FMT)
 logger.addHandler(FH)
 
@@ -47,7 +47,7 @@ class StreamWrite:
                 else:
                     self.fileNum += 1
                     logger.info('FileNum = {}'.format(self.fileNum))
-                    # config.writeNum += 1  #  maybe update on destruction of StreamWrite
+                    # config.WriteNum += 1  #  maybe update on destruction of StreamWrite
         if self.fileType == EXTENSION.TXT:
             self.write_params = {'ext': 'txt', 'delim': ' ', 'data': (buffer, time_buffer)}
         elif self.fileType == EXTENSION.CSV:

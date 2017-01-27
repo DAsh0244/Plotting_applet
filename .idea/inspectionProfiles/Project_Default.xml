@@ -23,6 +23,7 @@
           <option value="NI_DAQ.DAQmxResetDevice" />
           <option value="NI_DAQ.*" />
           <option value="libs.NI_DAQ.*" />
+          <option value="Handlers.DaqHandler.*" />
         </list>
       </option>
     </inspection_tool>

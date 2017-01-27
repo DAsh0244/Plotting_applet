@@ -5,6 +5,18 @@ import numpy as np
 import itertools
 
 
+# """ Logging setup: """
+# import logging
+# import os
+# logger = logging.getLogger(__name__)
+# logger.setLevel(logging.INFO)  # CRITICAL , ERROR , WARNING , INFO , DEBUG , NOTSET
+# if not os.path.isdir('{}\\Debug'.format(os.getcwd())) and (logger.level is not logger.disabled):
+#     os.mkdir('{}\\Debug'.format(os.getcwd()))
+# FH = logging.FileHandler('{}\\Debug\\debug.log'.format(os.getcwd()))
+# FMT = logging.Formatter("%(asctime)s - %(name)s -- %(message)s")
+# FH.setFormatter(FMT)
+# logger.addHandler(FH)
+
 def moving_average(iterable, n=3):
     """
     Boxcar or moving average implemented with the deque data type
@@ -40,6 +52,15 @@ def fft_sample(data, sample_period):
     :return: list of values corresponding with the frequency bins of the fft
     """
     return np.fft.rfftfreq(len(data), sample_period)
+
+
+def calc_delta(data) -> float:
+    """
+    returns the average delta value for closely spaced data sets
+    :param data: array of time values to have the average timestep be computed for
+    :return: average timestep value
+    """
+    return np.diff(data).sum() / len(data)
 
 
 def roll(data, shift, axis=None):
