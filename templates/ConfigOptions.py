@@ -45,6 +45,7 @@ class ConfigData:
         self.NIPort = None
         self.NumSamples = int(1000000)
         self.TimeEnable = False
+        self.combined_axis = False
 
     # TODO MAKE PROPER
     def get_plot_data(self):
@@ -86,6 +87,10 @@ class ConfigData:
         """returns a tuple of relevant data for high level conversion purposes"""
         return self.MaxVoltage, self.MinVoltage, (self.MaxVoltage - self.MinVoltage / self.BitDepth.value)
 
+    def set_combined(self, val: bool):
+        """Setter for Write_Enable Value"""
+        self.combined_axis = val
+
     def set_serial_port(self, port):
         """takes a string argument for the currently selected serial port"""
         self.SerialPort = port
@@ -101,6 +106,14 @@ class ConfigData:
     def set_serial_baud(self, baud):
         """takes a positive integer value for the intended serial baudrate"""
         self.SerialBaud = baud
+
+    def set_ext(self, ext):
+        """takes a defined streamtype value and sets extension to it."""
+        self.Extension = ext
+
+    def set_order(self, ord):
+        """takes a defined BITORDER value and sets BitOrder to it."""
+        self.BitOrder = ord
 
     def set_stream_enable(self, val: bool):
         """Setter for Write_Enable Value"""

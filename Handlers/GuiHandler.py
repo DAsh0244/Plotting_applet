@@ -51,14 +51,16 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.actionNameSession.triggered.connect(par.session_name_update)
         self.actionInput_Bit_Depth.triggered.connect(par.update_bit_data)
         self.actionConsole.triggered.connect(par.open_console)
+
         # todo: needs to be properly connected to config set functions
-        self.actionCSV.triggered.connect(lambda: print('type = CSV'))
-        self.actionMAT.triggered.connect(lambda: print('type = MAT'))
-        self.actionTXT.triggered.connect(lambda: print('type = TXT'))
-        self.actionLSB_first.triggered.connect(lambda: print('LSB FIRST'))
-        self.actionMSB_first.triggered.connect(lambda: print('MSB FIRST'))
-        self.actionSeperate_axis.triggered.connect(lambda: print('Separate axis files'))
-        self.actionCombined_Axis.triggered.connect(lambda: print('Combined axis file'))
+        self.actionCSV.triggered.connect(lambda: par.Config.set_ext(EXTENSION.CSV))
+        self.actionMAT.triggered.connect(lambda: par.Config.set_ext(EXTENSION.MAT))
+        self.actionTXT.triggered.connect(lambda: par.Config.set_ext(EXTENSION.TXT))
+        self.actionLSB_first.triggered.connect(lambda: par.Config.set_order(BITORDER.LSB))
+        self.actionMSB_first.triggered.connect(lambda: par.Config.set_order(BITORDER.MSB))
+        self.actionSeperate_axis.triggered.connect(lambda: par.Config.set_combined(False))
+        self.actionCombined_Axis.triggered.connect(lambda: par.Config.set_combined(True))
+
         self.actionSerial.triggered.connect(self.serial_mode_enable)
         self.actionNI_DAQ.triggered.connect(self.NI_mode_enable)
         self.actionUSB.triggered.connect(self.USB_mode_enable)
@@ -113,15 +115,18 @@ class GuiHandler(Ui.Ui_Plotting_Gui):
         self.MainWindow.show()
     '''END INIT'''
 
-# todo make this do things - maybe remap to parent
+    # todo make this do things - maybe remap to parent
     def serial_mode_enable(self):
         self.mode_label.setText(Ui._translate("Plotting_Gui", "Serial", None))
+        self.Port_Label.setText(Ui._translate("Plotting_Gui", "Serial Port", None))
 
     def NI_mode_enable(self):
         self.mode_label.setText(Ui._translate("Plotting_Gui", "NI DAQ", None))
+        self.Port_Label.setText(Ui._translate("Plotting_Gui", "NI Port", None))
 
     def USB_mode_enable(self):
         self.mode_label.setText(Ui._translate("Plotting_Gui", "USB", None))
+        self.Port_Label.setText(Ui._translate("Plotting_Gui", "USB Port", None))
 
     def dual_plot(self):
         """
